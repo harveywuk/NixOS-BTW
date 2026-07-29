@@ -26,12 +26,17 @@
           post-build-hook = pkgs.writeShellScript "push-to-sfdgahf12345-cachix" ''
             set -eu
 
-
             if ! command -v cachix >/dev/null 2>&1; then
               exit 0
             fi
 
             if [ -z "$OUT_PATHS" ]; then
+              exit 0
+            fi
+
+            if [ -f /run/secrets/cachix ]; then
+              export CACHIX_AUTH_TOKEN="$(cat /run/secrets/cachix)"
+            else
               exit 0
             fi
 

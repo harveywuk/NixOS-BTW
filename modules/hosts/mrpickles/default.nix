@@ -42,7 +42,7 @@
         ...
       }:
       {
-        imports = [ (inputs.self + "/hosts/void/hardware-configuration.nix") ];
+        imports = [ (inputs.self + "/hosts/mrpickles/hardware-configuration.nix") ];
 
         boot = {
           loader.limine = {
@@ -79,13 +79,27 @@
             enable32Bit = lib.mkDefault true;
           };
           steam-hardware.enable = true;
+
+          # NVIDIA RTX 3090
+          nvidia = {
+            modesetting.enable = true;
+            powerManagement.enable = false;
+            open = true; # Ampere+ supports the open kernel module
+            package = config.boot.kernelPackages.nvidiaPackages.stable;
+          };
         };
+
+        services.xserver.videoDrivers = [ "nvidia" ];
 
         powerManagement.cpuFreqGovernor = "performance";
 
         environment.variables = {
           #AMD_VULKAN_ICD = "RADV";
           #MESA_SHADER_CACHE_MAX_SIZE = "32G";
+          LIBVA_DRIVER_NAME = "nvidia";
+          GBM_BACKEND = "nvidia-drm";
+          __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+          WLR_NO_HARDWARE_CURSORS = "1";
         };
 
         environment.systemPackages = with pkgs; [
