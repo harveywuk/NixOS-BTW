@@ -1,0 +1,63 @@
+{ den, inputs, ... }:
+{
+  den.aspects.systempackages.nixos =
+    { pkgs, ... }:
+    {
+      # System wide packages
+      environment.systemPackages = with pkgs; [
+        ananicy-cpp
+        ananicy-rules-cachyos
+        bc
+        bind
+        bluetui
+        bluez
+        brightnessctl
+        cachix
+        choose
+        cron
+        dig
+        ddcutil
+        dust
+        fbset
+        fd
+        file
+        gnupg
+        gzip
+        hydra-check
+        iperf3
+        killall
+        libnotify
+        lsof
+        mediainfo
+        mtr
+        nix-converter
+        nixfmt
+        nixpkgs-review
+        ncdu
+        nurl
+        nvd
+        pciutils
+        playerctl
+        procps
+        ripgrep
+        rtkit
+        sd
+        swappy
+        traceroute
+        tree
+        treefmt
+        tree-sitter
+        udiskie
+        unzip
+        usbutils
+        via
+        wget
+        whois
+        xrandr
+        xwayland
+        yubico-pam
+        yubioath-flutter
+        zip
+      ];
+    };
+}

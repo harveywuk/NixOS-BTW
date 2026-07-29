@@ -1,0 +1,15 @@
+# sops-nix configuration
+keys:
+  # User SSH-derived key — for manual editing with `sops secrets/secrets.yaml`
+  - &admin_mrpickles age1h8nd2rsr3yrh6jpjrkxdydn880p57xv8tdj0lxem6npe8mmdu99sf2ne8j
+
+  # Per-machine standalone age key for boot-time decryption via sops-nix systemd service
+  # Generated with: age-keygen -o /etc/sops/age/key.txt
+  - &nixos-btw_boot age1fqh2aalgu3j35chdct874sxxex3pc5djf9znuftttahfv958u5fsa7uzh3
+
+creation_rules:
+  - path_regex: secrets/secrets\.yaml$
+    key_groups:
+      - age:
+          - *admin_mrpickles
+          - *nixos-btw_boot

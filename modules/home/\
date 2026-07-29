@@ -1,0 +1,50 @@
+{ den, inputs, ... }:
+{
+  den.aspects.packages.homeManager =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      home.packages = with pkgs; [
+        appimage-run
+        asciinema
+        blueman
+        cmatrix
+        comma
+        devenv
+        evtest
+        ffmpeg
+        file-roller
+        gh-dash
+        gpu-screen-recorder
+        grim
+        gvfs
+        home-manager
+        hyprpicker
+        hyprpwcenter
+        hyprshutdown
+        hyprsysteminfo
+        kdePackages.okular
+        kitty-themes
+        lazyjj
+        libsecret
+        inputs.nix-versions.packages.${pkgs.stdenv.hostPlatform.system}.default
+        obsidian
+        oculante
+        pinta
+        protonup-qt
+        redact
+        seahorse
+        slurp
+        socat
+        tenacity
+        thunar
+        thunar-archive-plugin
+        thunar-media-tags-plugin
+        thunar-volman
+        wayfreeze
+        wl-clipboard
+      ];
+    };
+}

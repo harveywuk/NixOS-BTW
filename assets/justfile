@@ -1,0 +1,105 @@
+# List all available recipes
+default:
+    just -g --list
+
+# Build the system without switching
+build:
+    nh os build
+
+# Check the flake for errors
+check flake_path="~/nix":
+    nix flake check {{flake_path}}
+
+# Garbage collect and clean up old Nix generations
+clean:
+    nh clean all -k 5 --optimise
+
+# Initialize a dev environment in the current directory from a FlakeHub template
+dev template:
+  nix flake init -t github:the-nix-way/dev-templates#{{template}}
+
+# Copy dev flake from ~/nix/dev/{template}.flake.dev to current directory as flake.nix and copy direnv .envrc to use flake automatically
+copy-dev template:
+  cp ~/nix/devflakes/{{template}}.flake.dev ./flake.nix
+  cp ~/nix/devflakes/.envrc .
+
+# Get the sha256 hash of a URL in both hex and nix formats
+fetch-hash url:
+    @raw_hash=`nix-prefetch-url --type sha256 "{{url}}" | tail -n1`
+    @echo "Hex hash: $$raw_hash"
+    @echo "Nix hash: $$(nix hash convert --hash-algo sha256 "$$raw_hash")"
+
+# Initialize a flake.nix with the given dependencies
+flake-init pkgs:
+    curl https://nix-versions.oeiuwq.com/flake.nix/{{pkgs}} -o flake.nix && use flake
+
+# Generate a hardware config for current machine and place in current directory
+generate-hardware-config:
+  nixos-generate-config --show-hardware-config > hardware-configuration.nix
+
+# Print the store outPath for a nixpkgs package
+get-path pkg_name:
+    nix eval nixpkgs#{{pkg_name}}.outPath
+
+# Show NixOS system generation history
+history:
+    nix profile history --profile /nix/var/nix/profiles/system
+
+# Check hydra builds for package
+hydra pkg:
+  hydra-check {{pkg}}
+
+# Nix OS system metadata information
+metadata:
+  nix-info -m
+
+# Optimize nix store (hard links identical files to free space)
+optimize-store:
+  nix-store --optimize
+
+# Build the system and switch to it
+rebuild:
+    nh os switch
+
+bootbuild:
+    nh os boot
+
+# Enter nixpkgs repl
+repl:
+    nix repl -f flake:nixpkgs
+
+# Run a package with arguments via nix-shell (use , comma instead of this)
+run pkg *args:
+    nix-shell -p {{pkg}}.out --run '{{pkg}} {{args}}'
+
+# Search nixpkgs for a package
+search pkg:
+    nh search {{pkg}}
+
+# Search nixpkgs PRs for title's containing string
+search-prs string:
+  gh search prs -R nixos/nixpkgs --match title string 
+
+# Enter an ad-hoc shell with the given package(s)
+shell +pkgs:
+    nix-shell -p {{pkgs}}
+
+# Update all flake inputs
+update flake="~/nix":
+    nix flake update --flake {{flake}}
+
+# Update specific flake input(s)
+update-input +inputs:
+    nix flake update {{inputs}} --flake ~/nix
+
+# Nix version
+version:
+  nixos-version
+
+# Why a package is dependency
+why pkg:
+  nix why-depends /run/current-system nixpkgs#{{pkg}}
+
+# Updates flake.nix with flake from modules/flake-inputs.nix
+write-flake:
+    nix run .#write-flake
