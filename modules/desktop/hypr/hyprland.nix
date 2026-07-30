@@ -282,10 +282,10 @@
                           hl.bind(mod .. " + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
                           hl.bind(mod .. " + v", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
                           hl.bind(mod .. " + bracketright", hl.dsp.exec_cmd("noctalia msg wallpaper-random"))
-                          hl.bind(mod .. " + b", hl.dsp.exec_cmd("firefox"))
-                          hl.bind(mod .. " + SHIFT + b", hl.dsp.exec_cmd("firefox --private-window"))
+                          hl.bind(mod .. " + w", hl.dsp.exec_cmd("zen"))
+                          hl.bind(mod .. " + SHIFT + w", hl.dsp.exec_cmd("zen --private-window"))
                           hl.bind(mod .. " + SHIFT + c", hl.dsp.exec_cmd("pgrep -x hyprpicker > /dev/null 2>&1 && killall hyprpicker || hyprpicker -a -f hex -r"))
-                          hl.bind(mod .. " + e", hl.dsp.exec_cmd("thunar"))
+                          hl.bind(mod .. " + e", hl.dsp.exec_cmd("nautilus"))
                           hl.bind(mod .. " + o", hl.dsp.exec_cmd("obsidian"))
 
                           -- -----------------------------------------------------------------------
@@ -476,7 +476,7 @@
 
                               hl.window_rule({ name = "thunderbirdreminder", match = { class = "org.mozilla.Thunderbird", title = "^.*Reminder.*$" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size })
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
-                              hl.window_rule({ name = "pip", match = { class = "firefox", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
+                              hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
                               hl.window_rule({ name = "sgdbooppopup", match = { class = "SGDBoop" }, float = true, max_size = floating_max_size })
 
                               -- -----------------------------------------------------------------------
@@ -506,12 +506,12 @@
                                   hover_icon_on_border = false,
                                   col = {
                                     active_border = {
-                                      colors = { "rgb(37f499)", "rgb(04d1f9)" },
+                                      colors = { "rgb(${config.lib.stylix.colors.base0D})", "rgb(${config.lib.stylix.colors.base0C})" },
                                       angle = 90,
                                     },
-                                    inactive_border = "rgb(a48cf2)",
-                                    nogroup_border = "rgb(a48cf2)",
-                                    nogroup_border_active = "rgba(36F498FF)",
+                                    inactive_border = "rgb(${config.lib.stylix.colors.base01})",
+                                    nogroup_border = "rgb(${config.lib.stylix.colors.base01})",
+                                    nogroup_border_active = "rgba(${config.lib.stylix.colors.base0B}FF)",
                                   },
                                 },
 
@@ -692,7 +692,7 @@
                                 hl.exec_cmd("hyprctl setcursor eldritch-great-old-green-cursors 32")
                                 hl.exec_cmd("~/.config/hypr/scripts/save-workspace.sh")
                                 hl.exec_cmd("xrandr --output ${defaultMonitor} --primary")
-                                hl.exec_cmd("firefox", { workspace = "2 silent" })
+                                hl.exec_cmd("zen", { workspace = "2 silent" })
                                 hl.exec_cmd("sleep 8 && thunderbird", { workspace = "12 silent" })
                                 hl.exec_cmd("spotify --enable-features=UseOzonePlatform --ozone-platform=wayland", {workspace = "13 silent"})
                                 hl.exec_cmd("steam", { workspace = "10 silent" })

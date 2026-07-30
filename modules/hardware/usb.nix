@@ -8,14 +8,5 @@
           udisks2.enable = true;
         };
       };
-    homeManager = {
-      services = {
-        udiskie = {
-          enable = true;
-          automount = true;
-          tray = "auto";
-        };
-      };
-    };
   };
 }

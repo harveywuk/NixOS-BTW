@@ -42,7 +42,7 @@
 
             # if you want to read from file instead
             # settings = lib.mkForce (builtins.fromTOML (builtins.readFile ../../assets/noctalia/noctalia-config.toml));
-            settings = lib.mkForce {
+            settings = lib.mkDefault {
               audio = {
                 enable_overdrive = false;
                 enable_sounds = false;
@@ -853,7 +853,7 @@
                 transition_on_startup = true;
 
                 automation = {
-                  enabled = true;
+                  enabled = false;
                   interval_seconds = 300;
                   recursive = false;
                 };

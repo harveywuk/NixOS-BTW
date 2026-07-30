@@ -3,14 +3,17 @@
   den.aspects.systempackages.nixos =
     { pkgs, ... }:
     {
+      # profile-sync-daemon needs its service enabled to actually sync
+      # browser profiles to tmpfs — just having the binary does nothing.
+      services.psd.enable = true;
+
       # System wide packages
       environment.systemPackages = with pkgs; [
-        ananicy-cpp
-        ananicy-rules-cachyos
         bc
         bind
         bluetui
         bluez
+        bpftune
         brightnessctl
         cachix
         choose
@@ -23,6 +26,7 @@
         file
         gnupg
         gzip
+        high-tide
         hydra-check
         iperf3
         killall
@@ -39,6 +43,7 @@
         pciutils
         playerctl
         procps
+        profile-sync-daemon
         ripgrep
         rtkit
         sd
@@ -47,7 +52,6 @@
         tree
         treefmt
         tree-sitter
-        udiskie
         unzip
         usbutils
         via

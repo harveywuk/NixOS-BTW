@@ -19,6 +19,8 @@
             localNetworkGameTransfers.openFirewall = true;
             extraCompatPackages = with pkgs; [
               proton-ge-bin
+              #inputs.nix-proton-cachyos.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos
+              proton-cachyos_x86_64_v3 # TODO: re-enable once chaotic-nyx fixes upstream hash mismatch
             ];
           };
           environment.sessionVariables = {

@@ -19,14 +19,14 @@
 
           icons = {
             enable = true;
-            light = "Eldritch-Suru-Cthulhu";
-            dark = "Eldritch-Suru-Cthulhu";
-            package = pkgs.eldritch-icon-theme;
+            light = "WhiteSur-light";
+            dark = "WhiteSur-dark";
+            package = pkgs.whitesur-icon-theme;
           };
 
           cursor = {
-            name = "eldritch-great-old-green-cursors";
-            package = inputs.eldritch-cursors.packages.${pkgs.stdenv.hostPlatform.system}.great-old-green;
+            name = "Bibata-Modern-Ice";
+            package = pkgs.bibata-modern-ice-hyprcursor;
             size = 32;
           };
 
@@ -38,7 +38,7 @@
             };
 
             sansSerif = {
-              name = "Roboto";
+              name = "Inter";
             };
 
             monospace = {

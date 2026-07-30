@@ -27,11 +27,12 @@
       den.aspects.polkit
 
       # Services
-      # den.aspects.ananicy
+      den.aspects.ananicy
       # den.aspects.networkdrives
 
       # System packages
       den.aspects.systempackages
+      den.aspects.zen-browser
     ];
 
     nixos =
@@ -85,7 +86,7 @@
             modesetting.enable = true;
             powerManagement.enable = false;
             open = true; # Ampere+ supports the open kernel module
-            package = config.boot.kernelPackages.nvidiaPackages.stable;
+            package = pkgs.nvidia_cachyos;
           };
         };
 

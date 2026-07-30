@@ -6,6 +6,7 @@
       fonts.packages = with pkgs; [
         (inputs.neonmono.packages.${pkgs.stdenv.hostPlatform.system}.default)
         fira-sans
+        inter
         roboto
         material-icons
         material-symbols
