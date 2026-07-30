@@ -5,6 +5,7 @@
     {
       nixpkgs = {
         overlays = [
+          inputs.chaotic.overlays.default
           (final: prev: {
             eldritch-icon-theme = prev.stdenv.mkDerivation {
               pname = "eldritch-icon-theme";

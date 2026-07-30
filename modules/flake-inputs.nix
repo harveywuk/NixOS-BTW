@@ -5,6 +5,10 @@
   flake-file.inputs = {
     den.url = "github:denful/den/refs/tags/v0.18.0";
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

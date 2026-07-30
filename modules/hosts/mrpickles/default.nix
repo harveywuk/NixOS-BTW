@@ -59,12 +59,12 @@
             enable = true;
             kernelModules = [ "amdgpu" ];
           };
-          kernelPackages = pkgs.linuxPackages_zen;
           kernelModules = [
             "ntsync"
           ];
           kernelParams = [
             "splash"
+            "nvidia-drm.modeset=1"
           ];
           blacklistedKernelModules = [
             #"mt7925e"
@@ -90,6 +90,18 @@
         };
 
         services.xserver.videoDrivers = [ "nvidia" ];
+
+        services.seatd.enable = true;
+
+        systemd.services.greetd.environment = {
+          # <-- add this block
+          NOCTALIA_GREETER_LOG = "stderr";
+          WLR_LOG = "info";
+        };
+        systemd.services.greetd.serviceConfig = {
+          StanardOutput = "journal";
+          StandardError = "journal";
+        };
 
         powerManagement.cpuFreqGovernor = "performance";
 
