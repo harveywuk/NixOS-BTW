@@ -1,5 +1,6 @@
-[README.md](https://github.com/user-attachments/files/30601937/README.md)
 # NixOS Configuration
+
+![Desktop](./screenshots/desktop.png)
 
 My NixOS configuration using the [den](https://github.com/denful/den) framework with [flake-parts](https://flake.parts/) and [import-tree](https://github.com/vic/import-tree).
 
@@ -27,6 +28,7 @@ My NixOS configuration using the [den](https://github.com/denful/den) framework 
 │   └── users/
 │       └── mrpickles/mrpickles.nix  # User aspect — all desktop/shell/app includes
 ├── assets/                # Wallpapers, logos, static assets
+├── screenshots/           # Desktop screenshots for the README
 └── secrets/               # SOPS age-encrypted secrets
 ```
 
