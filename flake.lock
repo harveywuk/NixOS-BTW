@@ -657,17 +657,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1785220649,
-        "narHash": "sha256-hBxyk3+b0FB7g30/CdD2hJ12FtUd0oqqyStgyIkTps8=",
-        "owner": "BlueManCZ",
-        "repo": "hyprmod",
-        "rev": "89a0c48487979e0546e643ba7a02c6badb6aa258",
-        "type": "github"
+        "lastModified": 1785511915,
+        "narHash": "sha256-0pl6S/FogLpqMxJZEyPAR+ymqUmF9xFqLw9OLtVkXXc=",
+        "path": "/home/mrpickles/dev/hyprmod",
+        "type": "path"
       },
       "original": {
-        "owner": "BlueManCZ",
-        "repo": "hyprmod",
-        "type": "github"
+        "path": "/home/mrpickles/dev/hyprmod",
+        "type": "path"
       }
     },
     "hyprtoolkit": {

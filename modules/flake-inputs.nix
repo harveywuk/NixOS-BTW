@@ -25,7 +25,7 @@
       url = "github:hyprwm/Hyprland";
     };
     hyprmod = {
-      url = "github:BlueManCZ/hyprmod";
+      url = "path:/home/mrpickles/dev/hyprmod";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database = {

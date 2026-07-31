@@ -28,7 +28,7 @@
     };
     hyprland.url = "github:hyprwm/Hyprland";
     hyprmod = {
-      url = "github:BlueManCZ/hyprmod";
+      url = "path:/home/mrpickles/dev/hyprmod";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "github:vic/import-tree";
