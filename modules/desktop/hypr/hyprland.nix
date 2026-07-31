@@ -459,7 +459,7 @@
 
                               hl.window_rule({ match = { content = "game", fullscreen = true }, confine_pointer = true })
                               hl.window_rule({ name = "steampopup", match = { title = "Steamwebhelper" }, workspace = "10 silent", suppress_event = "activatefocus" })
-                              hl.window_rule({ name = "steamnotification", match = { class = "steam", title = "^notificationtoasts" }, pin=true, suppress_event = "activatefocus", float=true })
+                              hl.window_rule({ name = "steamnotification", match = { class = "steam", title = "^notificationtoasts" }, pin=true, suppress_event = "activatefocus", float=true, opacity = "1.0 override" })
                               hl.window_rule({ name = "steamsignin", match = { initial_title = "Sign in to Steam", initial_class = "steam" }, float = true, center = true, max_size = floating_max_size, suppress_event = "activatefocus", workspace = "10 silent" })
                               hl.window_rule({ name = "steam", match = { class = "steam|Steam" }, workspace = "10 silent", suppress_event = "activatefocus" })
                               hl.window_rule({ name = "steamgames", match = { class = "^steam_app_.*$" }, workspace = "11", fullscreen = true, content="game"})
@@ -498,6 +498,7 @@
                                 input = {
                                   follow_mouse = 1,
                                   sensitivity = 0,
+                                  accel_profile = "flat",
                                   scroll_factor = 1.0,
                                 },
 

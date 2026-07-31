@@ -13,6 +13,7 @@
 
       # Hardware
       den.aspects.bluetooth
+      den.aspects.coolercontrol
       den.aspects.kernel
 
       # Network printer stuff, specific to my network
@@ -58,10 +59,21 @@
           };
           initrd = {
             enable = true;
-            kernelModules = [ "amdgpu" ];
+            kernelModules = [
+              "amdgpu"
+              "nvidia"
+              "nvidia_modeset"
+              "nvidia_drm"
+            ];
           };
           kernelModules = [
             "ntsync"
+            # The N7 B650E's onboard fan headers are wired to an NCT6796D-S/
+            # NCT6799D-R Super I/O chip. It's an ISA-bus device, so unlike
+            # PCI/USB hwmon drivers it never autoloads via udev - without
+            # this it just silently never shows up, and only the GPU's own
+            # fans (amdgpu/nvidia hwmon) are visible to CoolerControl.
+            "nct6775"
           ];
           kernelParams = [
             "splash"

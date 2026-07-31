@@ -6,6 +6,12 @@
       ...
     }:
     {
+      # high-tide crashes on first launch if ~/.cache/high-tide doesn't
+      # already exist, since it calls mkdir() without parents=True.
+      systemd.user.tmpfiles.rules = [
+        "d %C/high-tide/images 0755 - - -"
+      ];
+
       home.packages = with pkgs; [
         appimage-run
         asciinema

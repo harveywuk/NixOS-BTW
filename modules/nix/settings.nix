@@ -11,6 +11,7 @@
         config = {
           allowUnfree = true;
           permittedInsecurePackages = [
+            "electron-40.10.5" # required by winboat
           ];
         };
       };

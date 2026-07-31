@@ -5,7 +5,31 @@
     {
       imports = [ inputs.chaotic.nixosModules.default ];
 
-      boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
+      # Intel TDX host support is dead weight on AMD and prints a
+      # "not supported by this platform" message on every boot that
+      # loglevel/quiet can't suppress (kernel 7.1+ evaluates it
+      # unconditionally). Chaotic's cachyos kernel bakes its .config from
+      # a prebuilt `configfile` derivation and ignores NixOS's
+      # boot.kernelPatches/structuredExtraConfig entirely (see
+      # linux-cachyos/kernel.nix -> linuxManualConfig -> build.nix, which
+      # just symlinks `configfile` straight to .config), so the only way
+      # to actually flip this bit is to patch that inner configfile
+      # derivation's build phase directly.
+      boot.kernelPackages =
+        let
+          cachyos = pkgs.linuxPackages_cachyos-lto-znver4;
+          tdxDisabledConfigfile = cachyos.kernel.configfile.overrideAttrs (old: {
+            buildPhase = old.buildPhase + ''
+              scripts/config -d INTEL_TDX_HOST
+              make $makeFlags olddefconfig
+            '';
+          });
+        in
+        cachyos.extend (
+          _self: super: {
+            kernel = super.kernel.override { configfile = tdxDisabledConfigfile; };
+          }
+        );
 
       boot.blacklistedKernelModules = [ "hid_logitech_hidpp" ];
 
@@ -40,12 +64,20 @@
         '';
       };
 
-      # Suppress kernel messages on console/TTY
+      # Suppress kernel messages on console/TTY.
+      #
+      # boot.consoleLogLevel must be set here rather than just passing
+      # "loglevel=0" in kernelParams: NixOS's own boot module derives its
+      # own "loglevel=${consoleLogLevel}" (default 4) and appends it to
+      # kernelParams *after* ours, and the kernel's loglevel= early_param
+      # takes whichever occurrence is last on the cmdline — so an explicit
+      # "loglevel=0" here was silently overridden back to 4.
+      boot.consoleLogLevel = 0;
       boot.kernelParams = [
         "quiet"
-        "loglevel=3"
-        "systemd.show_status=auto"
+        "systemd.show_status=false"
         "rd.udev.log_level=3"
+        "rd.systemd.show_status=false"
         # Allow GPU soft-reset on ring timeout instead of full hang
         "amdgpu.gpu_recovery=1"
       ];

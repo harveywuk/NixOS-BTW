@@ -68,6 +68,7 @@
         # Gaming
         den.aspects.steam
         den.aspects.mangohud
+        den.aspects.winboat
 
         # Communication
         # Setups thunderbird and protonmailbridge, unique to my user, edit email.nix to setup your accounts
@@ -90,6 +91,7 @@
               "libvirtd"
               "dialout"
               "wheel"
+              "docker"
             ];
           };
         };
