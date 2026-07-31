@@ -38,17 +38,13 @@
         inputs.nix-versions.packages.${pkgs.stdenv.hostPlatform.system}.default
         obsidian
         oculante
+        onlyoffice-desktopeditors
         pinta
         protonup-qt
         redact
         seahorse
         slurp
         socat
-        tenacity
-        thunar
-        thunar-archive-plugin
-        thunar-media-tags-plugin
-        thunar-volman
         wayfreeze
         wl-clipboard
       ];

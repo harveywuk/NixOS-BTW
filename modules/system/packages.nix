@@ -60,8 +60,6 @@
         whois
         xrandr
         xwayland
-        yubico-pam
-        yubioath-flutter
         zip
       ];
     };

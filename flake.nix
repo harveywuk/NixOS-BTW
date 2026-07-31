@@ -26,6 +26,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hypr-dynamic-cursors = {
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hypr-edgehover = {
+      url = "github:gfhdhytghd/hypr-edgehover";
+      flake = false;
+    };
+    hyprcapture = {
+      url = "github:gfhdhytghd/HyprCapture";
+      inputs.hyprland.follows = "hyprland";
+    };
     hyprland.url = "github:hyprwm/Hyprland";
     hyprmod = {
       url = "path:/home/mrpickles/dev/hyprmod";

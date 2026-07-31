@@ -24,6 +24,18 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
     };
+    hypr-dynamic-cursors = {
+      url = "github:VirtCode/hypr-dynamic-cursors";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hyprcapture = {
+      url = "github:gfhdhytghd/HyprCapture";
+      inputs.hyprland.follows = "hyprland";
+    };
+    hypr-edgehover = {
+      url = "github:gfhdhytghd/hypr-edgehover";
+      flake = false;
+    };
     hyprmod = {
       url = "path:/home/mrpickles/dev/hyprmod";
       inputs.nixpkgs.follows = "nixpkgs";
