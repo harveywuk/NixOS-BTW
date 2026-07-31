@@ -27,6 +27,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprmod = {
+      url = "github:BlueManCZ/hyprmod";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     import-tree.url = "github:vic/import-tree";
     neonmono = {
       url = "github:neonvoidx/NeonMono";

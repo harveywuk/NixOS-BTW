@@ -27,6 +27,7 @@
         den.aspects.starship
         # den.aspects.pure
         den.aspects.tealdeer
+        den.aspects.vscode
         den.aspects.yazi
         den.aspects.zoxide
         den.aspects.fish
@@ -43,6 +44,7 @@
         den.aspects.firefox
         den.aspects.gtk
         den.aspects.hyprland
+        den.aspects.hyprmod
         den.aspects.satty
         den.aspects.nautilus
 
