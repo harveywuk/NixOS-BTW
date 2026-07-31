@@ -17,6 +17,7 @@
         brightnessctl
         cachix
         choose
+        claude-code
         cron
         dig
         ddcutil

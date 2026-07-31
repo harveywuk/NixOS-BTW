@@ -234,6 +234,10 @@
                     hl.env("MOZ_ENABLE_WAYLAND", "1")
                     hl.env("EGL_PLATFORM", "wayland")
                     hl.env("HYPRLAND_TRACE", "1")
+                    hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Ice")
+                    hl.env("HYPRCURSOR_SIZE", "32")
+                    hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
+                    hl.env("XCURSOR_SIZE", "32")
                     hl.env("AQ_TRACE", "1")
 
                     -- -----------------------------------------------------------------------
@@ -282,7 +286,7 @@
                           hl.bind(mod .. " + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"))
                           hl.bind(mod .. " + v", hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"))
                           hl.bind(mod .. " + bracketright", hl.dsp.exec_cmd("noctalia msg wallpaper-random"))
-                          hl.bind(mod .. " + w", hl.dsp.exec_cmd("zen"))
+                          hl.bind(mod .. " + w", hl.dsp.exec_cmd("pgrep -f 'zen-wrapped' >/dev/null && hyprctl dispatch focuswindow 'class:^(zen)$' || zen"))
                           hl.bind(mod .. " + SHIFT + w", hl.dsp.exec_cmd("zen --private-window"))
                           hl.bind(mod .. " + SHIFT + c", hl.dsp.exec_cmd("pgrep -x hyprpicker > /dev/null 2>&1 && killall hyprpicker || hyprpicker -a -f hex -r"))
                           hl.bind(mod .. " + e", hl.dsp.exec_cmd("nautilus"))
@@ -441,7 +445,6 @@
                               })
                               hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "13 silent" })
                               hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "2 silent" })
-                              hl.window_rule({ name = "streamcontroller", match = { class = "com.core447.StreamController" }, workspace = "special:streamcontroller silent" })
                               ${lib.optionalString isMultiMonitor /* lua */ ''
                                 hl.window_rule({ name = "spotify", match = { class = "spotify" }, workspace = "13 silent" })
                                 hl.window_rule({ name = "fractal", match = { class = "org.gnome.Fractal" }, workspace = "12 silent" })
@@ -477,6 +480,7 @@
                               hl.window_rule({ name = "thunderbirdreminder", match = { class = "org.mozilla.Thunderbird", title = "^.*Reminder.*$" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size })
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
                               hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
+                              hl.window_rule({ name = "browser-opaque", match = { class = "^(firefox|zen)$" }, opacity = "1.0 override" })
                               hl.window_rule({ name = "sgdbooppopup", match = { class = "SGDBoop" }, float = true, max_size = floating_max_size })
 
                               -- -----------------------------------------------------------------------
@@ -484,6 +488,7 @@
                               -- -----------------------------------------------------------------------
 
                               hl.layer_rule({ name = "noctaliahide", match = { namespace = "^noctalia-notification$" }, no_screen_share = true })
+                              hl.layer_rule({ name = "noctalia", match = { namespace = "^noctalia-background-.*$" }, ignore_alpha = 0.5, blur = true, blur_popups = true })
 
                               -- -----------------------------------------------------------------------
                               -- Core Hyprland Settings
@@ -543,6 +548,9 @@
                                   rounding = 8,
                                   dim_inactive = true,
                                   dim_strength = 5.0e-2,
+                                  active_opacity = 0.92,
+                                  inactive_opacity = 0.82,
+                                  fullscreen_opacity = 1.0,
                                   blur = {
                                     enabled = true,
                                     size = 8,
@@ -689,10 +697,8 @@
                                 hl.exec_cmd("noctalia")
                                 hl.exec_cmd("~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\" \"${portraitMonitor}\"")
                                 hl.exec_cmd("systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-hyprland.service")
-                                hl.exec_cmd("hyprctl setcursor eldritch-great-old-green-cursors 32")
                                 hl.exec_cmd("~/.config/hypr/scripts/save-workspace.sh")
                                 hl.exec_cmd("xrandr --output ${defaultMonitor} --primary")
-                                hl.exec_cmd("zen", { workspace = "2 silent" })
                                 hl.exec_cmd("sleep 8 && thunderbird", { workspace = "12 silent" })
                                 hl.exec_cmd("spotify --enable-features=UseOzonePlatform --ozone-platform=wayland", {workspace = "13 silent"})
                                 hl.exec_cmd("steam", { workspace = "10 silent" })

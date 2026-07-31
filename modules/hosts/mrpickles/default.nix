@@ -74,6 +74,7 @@
         };
 
         hardware = {
+          i2c.enable = true;
           firmware = [ pkgs.linux-firmware ];
           graphics = {
             enable = lib.mkDefault true;

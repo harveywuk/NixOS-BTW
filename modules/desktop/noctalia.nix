@@ -49,8 +49,10 @@
               };
 
               bar.main = {
+                background_opacity = 0.85;
                 capsule = true;
                 capsule_foreground = "tertiary";
+                capsule_opacity = 0.85;
                 center = [
                   "cat"
                   "active_window"
@@ -784,6 +786,7 @@
                   open_near_click_control_center = true;
                   session_placement = "floating";
                   session_position = "center";
+                  transparency_mode = "glass";
                   wallpaper_placement = "attached";
                 };
 

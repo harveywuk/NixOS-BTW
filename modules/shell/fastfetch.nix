@@ -45,12 +45,6 @@
             modules = [
               "break"
               {
-                type = "command";
-                key = "󰀄 USER";
-                keyColor = "#a48cf2";
-                text = "whoami";
-              }
-              {
                 type = "os";
                 key = "󰣇 OS";
                 keyColor = "#04d1f9";
@@ -58,15 +52,15 @@
               }
               {
                 type = "command";
-                key = "󰇄 HOST";
+                key = "󰀄 USER";
                 keyColor = "#a48cf2";
-                text = "hostname";
+                text = "whoami";
               }
               {
                 type = "command";
-                key = "󰃭 AGE";
-                keyColor = "#59d1c6";
-                text = "echo $(( ( $(date +%s) - $(cat /var/lib/nixos-install-date 2>/dev/null || date +%s) ) / 86400 )) days";
+                key = "󰇄 HOST";
+                keyColor = "#a48cf2";
+                text = "hostname";
               }
               {
                 type = "command";
@@ -119,11 +113,6 @@
                 format = "{ipv4}";
               }
               {
-                type = "uptime";
-                key = "󰥔 UP";
-                keyColor = "#7081d0";
-              }
-              {
                 type = "memory";
                 key = "󰍛 RAM";
                 keyColor = "#f16c75";
@@ -135,6 +124,17 @@
                 key = "󰋊 SSD";
                 keyColor = "#ebfafa";
                 format = "{size-used} / {size-total} ({size-percentage})";
+              }
+              {
+                type = "command";
+                key = "󰃭 AGE";
+                keyColor = "#59d1c6";
+                text = "echo $(( ( $(date +%s) - $(cat /var/lib/nixos-install-date 2>/dev/null || date +%s) ) / 86400 )) days";
+              }
+              {
+                type = "uptime";
+                key = "󰥔 UP";
+                keyColor = "#7081d0";
               }
               "break"
               {

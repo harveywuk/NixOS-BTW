@@ -31,15 +31,21 @@
                   );
                 };
                 appearance = {
-                  scheme = "Eldritch";
+                  # "Synced" lets Sync Now (Noctalia Shell settings) push the
+                  # palette/wallpaper here; a hardcoded scheme name would win
+                  # over Sync every time since declarative keys take priority.
+                  scheme = "Synced";
                 };
                 cursor = {
-                  theme = "eldritch-great-old-green-cursors";
+                  theme = "Bibata-Modern-Ice";
                   size = 32;
                 };
               };
             };
           };
+          # noctalia-greeter only takes a theme name (no package option), so the
+          # cursor theme must be discoverable system-wide for greetd to find it.
+          environment.systemPackages = [ pkgs.bibata-modern-ice-hyprcursor ];
           security.pam.services.greetd.enableGnomeKeyring = true;
         };
     };
