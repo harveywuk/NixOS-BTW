@@ -1,23 +1,6 @@
 { den, ... }:
 {
   den.aspects.fastfetch = {
-    nixos =
-      { ... }:
-      {
-        # Stamps the true install date once, on first boot, to a file that
-        # persists forever regardless of how many generations get pruned
-        # later (nix-collect-garbage, nh clean, etc. never touch this).
-        systemd.services.record-install-date = {
-          description = "Record the original NixOS install date (once)";
-          wantedBy = [ "multi-user.target" ];
-          unitConfig.ConditionPathExists = "!/var/lib/nixos-install-date";
-          serviceConfig.Type = "oneshot";
-          script = ''
-            date +%s > /var/lib/nixos-install-date
-          '';
-        };
-      };
-
     homeManager =
       { pkgs, config, ... }:
       let
@@ -129,7 +112,7 @@
                 type = "command";
                 key = "󰃭 AGE";
                 keyColor = "#59d1c6";
-                text = "echo $(( ( $(date +%s) - $(cat /var/lib/nixos-install-date 2>/dev/null || date +%s) ) / 86400 )) days";
+                text = "echo $(( ( $(date +%s) - $(date -d 2026-07-28 +%s) ) / 86400 )) days";
               }
               {
                 type = "uptime";
