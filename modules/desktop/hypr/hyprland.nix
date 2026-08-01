@@ -697,6 +697,7 @@
 
                               hl.on("hyprland.start", function()
                                 hl.exec_cmd("noctalia")
+                                hl.exec_cmd("openrgb --startminimized")
                                 hl.exec_cmd("~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\" \"${portraitMonitor}\"")
                                 hl.exec_cmd("systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-hyprland.service")
                                 hl.exec_cmd("~/.config/hypr/scripts/save-workspace.sh")
