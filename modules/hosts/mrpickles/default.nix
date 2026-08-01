@@ -48,16 +48,6 @@
         imports = [ (inputs.self + "/hosts/mrpickles/hardware-configuration.nix") ];
 
         boot = {
-          loader.limine = {
-            enable = true;
-            secureBoot.enable = false;
-            style.interface.resolution = lib.mkDefault "3440x1440";
-            extraEntries = ''
-              /Windows
-                  protocol: efi
-                  path: boot():/efi/Microsoft/Boot/bootmgfw.efi
-            '';
-          };
           initrd = {
             enable = true;
             kernelModules = [

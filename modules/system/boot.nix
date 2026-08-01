@@ -12,9 +12,9 @@
           efiSysMountPoint = "/boot";
         };
         timeout = 3;
-        limine = {
+        systemd-boot = {
           enable = true;
-          maxGenerations = 10;
+          configurationLimit = 10;
         };
       };
     };
