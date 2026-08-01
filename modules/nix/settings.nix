@@ -55,7 +55,6 @@
           substituters = [
             "https://cache.nixos.org"
             "https://nix-community.cachix.org"
-            "https://cache.garnix.io"
             "https://hyprland.cachix.org"
             "https://neonvoidx.cachix.org"
             "https://noctalia.cachix.org"
@@ -63,8 +62,6 @@
           trusted-substituters = [
             # Official nix cache
             "https://cache.nixos.org"
-            # Garnix
-            "https://cache.garnix.io"
             # Nix Community Cache
             "https://nix-community.cachix.org"
             # hyprland cache
@@ -79,8 +76,6 @@
             "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
             # Personal Cachix cache
             "sfdgahf12345.cachix.org-1:GZ4gDiZwHEp8UTJrfFGSnlbSSnha1YQESGXF1QeEBV4="
-            # Garnix
-            "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
             # Nix community cache
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             # hyprland cache
