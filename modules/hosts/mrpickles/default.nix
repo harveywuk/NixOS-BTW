@@ -69,6 +69,7 @@
           kernelParams = [
             "splash"
             "nvidia-drm.modeset=1"
+            "nvidia_drm.fbdev=1"
           ];
           blacklistedKernelModules = [
             #"mt7925e"
@@ -114,9 +115,9 @@
           #AMD_VULKAN_ICD = "RADV";
           #MESA_SHADER_CACHE_MAX_SIZE = "32G";
           LIBVA_DRIVER_NAME = "nvidia";
+          NVD_BACKEND = "direct";
           GBM_BACKEND = "nvidia-drm";
           __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-          WLR_NO_HARDWARE_CURSORS = "1";
         };
 
         environment.systemPackages = with pkgs; [
