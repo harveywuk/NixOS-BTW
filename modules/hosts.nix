@@ -15,7 +15,7 @@ in
 
       monitors = {
         main = {
-          name = "DP-5";
+          name = "DP-4";
           mode = "3440x1440@165";
           scale = 1.0;
           bitdepth = 10;
@@ -31,7 +31,7 @@ in
           primary = true;
         };
         secondary = {
-          name = "DP-4";
+          name = "DP-5";
           mode = "2560x1440@165";
           scale = 1.0;
           bitdepth = 10;
