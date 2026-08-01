@@ -22,6 +22,7 @@
         evtest
         ffmpeg
         file-roller
+        fragments
         gh-dash
         gpu-screen-recorder
         grim
