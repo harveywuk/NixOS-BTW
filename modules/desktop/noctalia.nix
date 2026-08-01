@@ -45,7 +45,8 @@
             settings = lib.mkDefault {
               audio = {
                 enable_overdrive = false;
-                enable_sounds = false;
+                enable_sounds = true;
+                sound_volume = 1.0;
               };
 
               bar.main = {
@@ -54,7 +55,6 @@
                 capsule_foreground = "tertiary";
                 capsule_opacity = 0.85;
                 center = [
-                  "cat"
                   "active_window"
                 ];
                 contact_shadow = true;
@@ -62,7 +62,6 @@
                   "tray"
                   "input_volume"
                   "output_volume"
-                  "cat_2"
                   "ram"
                   "temp"
                   "battery"
@@ -95,13 +94,51 @@
                 thickness = 38;
                 widget_spacing = 12;
               }
-              // lib.optionalAttrs (portraitName != null) {
-                monitor = {
-                  ${portraitName} = {
-                    enabled = false;
-                    reserve_space = false;
+              // {
+                monitor =
+                  lib.optionalAttrs (portraitName != null) {
+                    ${portraitName} = {
+                      enabled = false;
+                      reserve_space = false;
+                    };
+                  }
+                  // lib.optionalAttrs (mainName != null) {
+                    ${mainName} = {
+                      background_opacity = 0.9;
+                      capsule = false;
+                      center = [
+                        "clock"
+                        "date"
+                      ];
+                      end = [
+                        "media"
+                        "tray"
+                        "widget"
+                        "nix-monitor"
+                        "notifications"
+                        "session"
+                      ];
+                      margin_ends = 450;
+                      radius = 12;
+                      scale = 1.2;
+                      start = [
+                        "launcher"
+                        "workspaces"
+                        "temp"
+                        "sysmon"
+                        "ram"
+                      ];
+                      thickness = 50;
+                    };
+                  }
+                  // lib.optionalAttrs (secondaryName != null) {
+                    ${secondaryName}.enabled = false;
                   };
-                };
+              };
+
+              brightness = {
+                enable_ddcutil = true;
+                sync_all_monitors = true;
               };
 
               calendar = {
@@ -113,6 +150,23 @@
               };
 
               desktop_widgets.enabled = false;
+
+              dock = {
+                background_opacity = 0.7;
+                enabled = true;
+                margin_edge = 7;
+                monitors = lib.optionals (secondaryName != null) [ secondaryName ];
+                pinned = [
+                  "steam"
+                  "zen"
+                  "high tide"
+                  "kitty"
+                  "obsidian"
+                ];
+                reserve_space = false;
+                show_dots = true;
+                smart_auto_hide = true;
+              };
 
               idle = {
                 behavior_order = [
@@ -142,7 +196,12 @@
 
               location = {
                 address = "Hooksett, NH";
-                auto_locate = false;
+                auto_locate = true;
+              };
+
+              lockscreen = {
+                fingerprint = false;
+                monitors = lib.optionals (mainName != null) [ mainName ];
               };
 
               lockscreen_widgets = {
@@ -737,10 +796,6 @@
                 kinds.media = false;
               };
 
-              plugin_settings."nightwatch75/file-search" = {
-                show_hidden = true;
-              };
-
               plugin_settings."noctalia/screen_recorder" = {
                 color_range = "full";
                 directory = "";
@@ -749,9 +804,11 @@
               plugins = {
                 enabled = [
                   "noctalia/screen_recorder"
-                  "noctalia/bongocat"
-                  "dotnetrob/cat"
-                  "nightwatch75/file-search"
+                  "noctalia/bitwarden"
+                  "noctalia/wallhaven"
+                  "avivbintangaringga/nix-monitor"
+                  "thepunkoff/pomodoro"
+                  "lowcache/claude-companion"
                 ];
                 source = [
                   {
@@ -764,14 +821,19 @@
                     location = "https://github.com/noctalia-dev/community-plugins";
                     name = "community";
                   }
+                  {
+                    kind = "git";
+                    location = "https://github.com/noctalia-dev/community-plugins";
+                    name = "my-plugins";
+                  }
                 ];
               };
 
               accessibility.ui_scale = 1.1000000089406967;
 
               shell = {
-                avatar_path = "${homeDir}/.face";
-                font_family = "NeonMono";
+                avatar_path = "${homeDir}/nixos-btw/assets/mr-pickles-logo.webp";
+                font_family = "Inter Medium";
                 lang = "en";
                 launch_apps_as_systemd_services = true;
                 polkit_agent = true;
@@ -779,6 +841,9 @@
                 settings_show_advanced = true;
 
                 greeter_sync.auto_sync = false;
+
+                screen_corners.enabled = true;
+                shadow.alpha = 0.98;
 
                 panel = {
                   borders = true;
@@ -835,9 +900,33 @@
               };
 
               theme = {
-                builtin = "Eldritch";
+                builtin = "Catppuccin";
                 mode = "dark";
-                source = "builtin";
+                source = "wallpaper";
+
+                templates = {
+                  builtin_ids = [
+                    "btop"
+                    "cava"
+                    "gtk3"
+                    "gtk4"
+                    "hyprland"
+                    "kitty"
+                    "qt"
+                    "starship"
+                  ];
+                  community_ids = [
+                    "opencode"
+                    "zen-browser"
+                    "discord"
+                    "neovim"
+                    "obsidian"
+                    "vscode"
+                    "steam"
+                    "hyprtoolkit"
+                    "yazi"
+                  ];
+                };
               };
 
               wallpaper = {
@@ -920,20 +1009,10 @@
                 caffeine = {
                   capsule = true;
                 };
-                cat = {
-                  input_devices = [ "/dev/input/by-id/usb-UBEST_Zoom75_Tiga_05D252E85C18-event-kbd" ];
-                  type = "noctalia/bongocat:cat";
-                };
-                cat_2 = {
-                  cat_color = "hover";
-                  cat_color_mode = "custom";
-                  cat_size = 39;
-                  show_cpu_percent = true;
-                  type = "dotnetrob/cat:cat";
-                };
                 clock = {
-                  capsule = true;
+                  capsule = false;
                   capsule_foreground = "primary";
+                  scale = 1.05;
                 };
                 control-center = {
                   capsule = true;
@@ -942,9 +1021,10 @@
                   capsule = true;
                 };
                 date = {
-                  capsule = true;
+                  capsule = false;
                   capsule_foreground = "primary";
-                  format = "{:%d %b %Y}";
+                  format = "{:%a, %b %d }";
+                  scale = 1.05;
                 };
                 display_mode = {
                   glyph = "device-projector";
@@ -960,8 +1040,10 @@
                   capsule = true;
                 };
                 launcher = {
-                  color = "primary";
+                  color = "on_surface";
+                  custom_image = "${homeDir}/Downloads/nixos-nix-package-manager-linux-unix-like-linux-1fb029a9ce963f5e2cfcc8225e21d629(1).png";
                   glyph = "bomb";
+                  scale = 2.0;
                 };
                 "left-spacer" = {
                   length = 25;
@@ -981,20 +1063,37 @@
                 network_tx = {
                   capsule = true;
                 };
+                "nix-monitor" = {
+                  scale = 1.2;
+                  show_text = false;
+                  type = "avivbintangaringga/nix-monitor:nix-monitor";
+                };
                 notifications = {
-                  capsule = true;
+                  capsule = false;
+                  scale = 1.3;
                 };
                 output_volume = {
                   capsule = true;
                 };
                 ram = {
-                  capsule = true;
+                  capsule = false;
+                  scale = 1.3;
+                  # show_label is flagged "unknown setting" by noctalia itself right now,
+                  # even in the live GUI-managed config; kept to match what's running.
+                  show_label = false;
+                  show_value = false;
                 };
                 recorder = {
                   type = "noctalia/screen_recorder:recorder";
                 };
                 session = {
                   color = "error";
+                  scale = 1.3;
+                };
+                sysmon = {
+                  scale = 1.3;
+                  show_value = false;
+                  stat = "gpu_usage";
                 };
                 taskbar = {
                   capsule_radius = 6;
@@ -1009,10 +1108,13 @@
                   workspace_label_placement = "inside";
                 };
                 temp = {
-                  capsule = true;
+                  capsule = false;
+                  scale = 1.3;
+                  show_label = false;
+                  show_value = false;
                 };
                 tray = {
-                  capsule = true;
+                  capsule = false;
                   capsule_border = "tertiary";
                   capsule_radius = 5;
                   scale = 1.3;
@@ -1020,8 +1122,15 @@
                 wallpaper = {
                   capsule = true;
                 };
+                # "widget" is the attribute name Noctalia assigns the thepunkoff/pomodoro
+                # plugin instance; scale is flagged "unknown setting" upstream even in the
+                # live GUI-managed config, kept to match what's actually running.
+                widget = {
+                  scale = 1.2;
+                  type = "thepunkoff/pomodoro:widget";
+                };
                 workspaces = {
-                  display = "none";
+                  capsule = true;
                   empty_color = "shadow";
                   font_weight = 700;
                   pill_scale = 0.80000000000000004;
