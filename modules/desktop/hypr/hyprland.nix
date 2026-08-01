@@ -519,7 +519,6 @@
                                   accel_profile = "flat",
                                   scroll_factor = 1.0,
                                 },
-
                                 general = {
                                   gaps_in = 5,
                                   gaps_out = 8,
@@ -652,9 +651,6 @@
                               hl.animation({ leaf = "fade", enabled = true, speed = 6, bezier = "standard" })
                               hl.animation({ leaf = "fadeDim", enabled = true, speed = 6, bezier = "standard" })
                               hl.animation({ leaf = "border", enabled = true, speed = 6, bezier = "standard" })
-
-                              -- ## Zoom
-                              hl.animation({ leaf = "zoomFactor", enabled = true, speed = 3.5, bezier = "quick" })
 
                               -- -----------------------------------------------------------------------
                               -- Event Hooks
