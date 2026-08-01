@@ -19,10 +19,10 @@ in
           mode = "3440x1440@165";
           scale = 1.0;
           bitdepth = 10;
-          cm = "hdredid";
+          cm = "dcip3";
           supports_hdr = true;
           supports_wide_color = true;
-          vrr = 1;
+          vrr = 2;
           sdrbrightness = 0.5;
           sdrsaturation = 1.0;
           sdr_max_luminance = 408;
@@ -35,10 +35,10 @@ in
           mode = "2560x1440@165";
           scale = 1.0;
           bitdepth = 10;
-          cm = "hdredid";
+          cm = "dcip3";
           supports_hdr = true;
           supports_wide_color = true;
-          vrr = 1;
+          vrr = 2;
           sdrbrightness = 0.5;
           sdrsaturation = 1.0;
           sdr_max_luminance = 408;
