@@ -522,7 +522,7 @@
                                 general = {
                                   gaps_in = 5,
                                   gaps_out = 8,
-                                  border_size = 3,
+                                  border_size = 0,
                                   resize_on_border = true,
                                   layout = "master",
                                   extend_border_grab_area = 3,
@@ -565,7 +565,7 @@
                                 decoration = {
                                   rounding = 12,
                                   dim_inactive = true,
-                                  dim_strength = 5.0e-2,
+                                  dim_strength = 0.3,
                                   active_opacity = 0.95,
                                   inactive_opacity = 0.85,
                                   fullscreen_opacity = 1.0,
@@ -579,9 +579,9 @@
                                   },
                                   shadow = {
                                     enabled = true,
-                                    range = 4,
-                                    render_power = 3,
-                                    color = "rgb(212337)",
+                                    range = 35,
+                                    render_power = 4,
+                                    color = "rgb(000000)",
                                   },
                                 },
 

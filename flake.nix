@@ -39,10 +39,6 @@
       inputs.hyprland.follows = "hyprland";
     };
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprmod = {
-      url = "path:/home/mrpickles/dev/hyprmod";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     import-tree.url = "github:vic/import-tree";
     neonmono = {
       url = "github:neonvoidx/NeonMono";

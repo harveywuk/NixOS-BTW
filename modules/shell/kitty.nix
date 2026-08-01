@@ -11,8 +11,6 @@
       programs.kitty = {
         enable = true;
 
-        themeFile = "Eldritch";
-
         actionAliases = {
           "kitty_scrollback_nvim" =
             "kitten ${config.home.homeDirectory}/.config/kitty/kitty_scrollback_nvim.py";
@@ -113,8 +111,6 @@
         extraConfig = ''
           # tab_separator set via extraConfig to ensure kitty receives `tab_separator ""`
           tab_separator ""
-          tab_title_template "{fmt.fg._323449}{fmt.bg.default}{fmt.fg._04d1f9}{fmt.bg.default}{index}{fmt.fg._04d1f9}{fmt.bg._323449} {title} {fmt.fg._323449}{fmt.bg.default} "
-          active_tab_title_template "{fmt.fg._37f499}{fmt.bg.default}{fmt.fg._212337}{fmt.bg._37f499}{fmt.fg._212337}{fmt.bg._37f499} {title} {fmt.fg._37f499}{fmt.bg.default} "
         '';
 
         keybindings = {

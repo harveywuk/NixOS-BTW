@@ -15,6 +15,7 @@
       den.aspects.bluetooth
       den.aspects.coolercontrol
       den.aspects.kernel
+      den.aspects.openrgb
 
       # Network printer stuff, specific to my network
       den.aspects.print

@@ -717,23 +717,6 @@
         "type": "github"
       }
     },
-    "hyprmod": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1785511915,
-        "narHash": "sha256-0pl6S/FogLpqMxJZEyPAR+ymqUmF9xFqLw9OLtVkXXc=",
-        "path": "/home/mrpickles/dev/hyprmod",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/mrpickles/dev/hyprmod",
-        "type": "path"
-      }
-    },
     "hyprtoolkit": {
       "inputs": {
         "aquamarine": [
@@ -1308,7 +1291,6 @@
         "hypr-edgehover": "hypr-edgehover",
         "hyprcapture": "hyprcapture",
         "hyprland": "hyprland",
-        "hyprmod": "hyprmod",
         "import-tree": "import-tree",
         "neonmono": "neonmono",
         "nix-index-database": "nix-index-database",
