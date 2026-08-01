@@ -53,7 +53,7 @@
               nativeBuildInputs = [
                 (prev.python3.withPackages (ps: [ ps.clickgen ]))
                 prev.librsvg
-                prev.xorg.xcursorgen
+                prev.xcursorgen
               ];
 
               # Only build the hyprcursor (vector) format for this one theme,
