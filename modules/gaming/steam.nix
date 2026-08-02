@@ -20,7 +20,16 @@
             extraCompatPackages = with pkgs; [
               proton-ge-bin
               #inputs.nix-proton-cachyos.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos
-              proton-cachyos_x86_64_v3 # TODO: re-enable once chaotic-nyx fixes upstream hash mismatch
+              # TODO: re-enable direct use once chaotic-nyx fixes upstream hash mismatch.
+              # chaotic-nyx's proton-cachyos ships its files under bin/ instead of the
+              # package root, so Steam can't find compatibilitytool.vdf there; re-expose
+              # it a level up so it shows up in Steam's compatibility tool list.
+              (runCommand "proton-cachyos-fixed" { } ''
+                mkdir -p $out
+                for f in ${proton-cachyos_x86_64_v3}/bin/*; do
+                  ln -s "$f" "$out/$(basename "$f")"
+                done
+              '')
             ];
           };
           environment.sessionVariables = {
@@ -28,12 +37,17 @@
             DXVK_HUD = "0";
             PROTON_ENABLE_HDR = "1";
             PROTON_USE_NTSYNC = "1";
-            PROTON_FSR4_UPGRADE = "1";
             PROTON_XESS_UPGRADE = "1";
-            # Disable mesh shaders — common cause of VKD3D ring timeouts on RDNA4
-            RADV_DEBUG = "nomeshshader";
-            # Disable upload heap host-visible VRAM — improves stability with VKD3D DX12 titles
-            VKD3D_CONFIG = "no_upload_hvv";
+            # Upgrade bundled DLSS DLLs — only honored by proton-cachyos's
+            # protonfixes, since mainline Proton can't redistribute NVIDIA's
+            # closed-source DLLs the way it does with FSR/XeSS
+            PROTON_DLSS_UPGRADE = "1";
+            # Force NVAPI on for titles Proton hasn't allow-listed, and expose
+            # the real adapter to NVAPI queries so DLSS/Reflex are detected
+            PROTON_ENABLE_NVAPI = "1";
+            DXVK_NVAPIHACK = "0";
+            # Expose DXR ray tracing to DX12 titles translated through VKD3D-Proton
+            VKD3D_CONFIG = "dxr";
             # Primary display for Proton Wayland driver
             WAYLANDDRV_PRIMARY_DISPLAY = primaryDisplay;
           };
@@ -44,7 +58,6 @@
         {
           home.packages = with pkgs; [
             inputs.scopebuddy.packages.${pkgs.stdenv.hostPlatform.system}.default
-            steam
             gamescope
             protontricks
             vulkan-tools
