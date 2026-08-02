@@ -52,7 +52,7 @@ My NixOS configuration using the [den](https://github.com/denful/den) framework 
 - **Nautilus** — GNOME Files as the default file manager, with `nautilus-open-any-terminal` for right-click "Open Terminal Here"
 - **Zen Browser** — via the [zen-browser-flake](https://github.com/youwen5/zen-browser-flake), set as default browser
 - **ananicy-cpp** — automatic process scheduling priority, using CachyOS's rule set
-- **Steam** — `proton-ge-bin` plus CachyOS-optimized Proton builds as selectable compatibility tools
+- **Steam** — `proton-ge-bin` plus a CachyOS-optimized Proton build (re-exposed a level up so Steam can find its `compatibilitytool.vdf`) as selectable compatibility tools; session vars tuned for NVIDIA — NVAPI forced on, DXR exposed via VKD3D-Proton, HDR, and DLSS/XeSS DLL upgrades (DLSS upgrade only honored under proton-cachyos)
 - **SOPS** — age-encrypted secrets, decrypted to `/run/secrets/` at boot via systemd service
 - **Conditional Includes** — aspects gated by `host.isGaming or false` via `lib.optionals`
 
