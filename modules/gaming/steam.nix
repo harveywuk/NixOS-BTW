@@ -20,16 +20,6 @@
             extraCompatPackages = with pkgs; [
               proton-ge-bin
               #inputs.nix-proton-cachyos.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos
-              # TODO: re-enable direct use once chaotic-nyx fixes upstream hash mismatch.
-              # chaotic-nyx's proton-cachyos ships its files under bin/ instead of the
-              # package root, so Steam can't find compatibilitytool.vdf there; re-expose
-              # it a level up so it shows up in Steam's compatibility tool list.
-              (runCommand "proton-cachyos-fixed" { } ''
-                mkdir -p $out
-                for f in ${proton-cachyos_x86_64_v3}/bin/*; do
-                  ln -s "$f" "$out/$(basename "$f")"
-                done
-              '')
             ];
           };
           environment.sessionVariables = {
@@ -56,6 +46,17 @@
 
       homeManager =
         { pkgs, ... }:
+        let
+          # chaotic-nyx's proton-cachyos ships its files under bin/ instead of the
+          # package root, so Steam can't find compatibilitytool.vdf there; re-expose
+          # it a level up so it shows up as a compat tool.
+          protonCachyOSFixed = pkgs.runCommand "proton-cachyos-fixed" { } ''
+            mkdir -p $out
+            for f in ${pkgs.proton-cachyos_x86_64_v3}/bin/*; do
+              ln -s "$f" "$out/$(basename "$f")"
+            done
+          '';
+        in
         {
           home.packages = with pkgs; [
             inputs.scopebuddy.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -66,6 +67,13 @@
             # if you want GTK theme style for Steam, requires manual running to apply
             # adwsteamgtk
           ];
+
+          # Steam's STEAM_EXTRA_COMPAT_TOOLS_PATHS (used by programs.steam.extraCompatPackages)
+          # only honors the first colon-separated entry in this Steam client build, so anything
+          # beyond proton-ge-bin there silently never gets scanned. Symlinking extra compat tools
+          # directly into compatibilitytools.d sidesteps that — Steam scans it as real
+          # subdirectories, so this is also the place to add future Proton builds.
+          home.file.".local/share/Steam/compatibilitytools.d/Proton-CachyOS".source = protonCachyOSFixed;
         };
     };
 }
