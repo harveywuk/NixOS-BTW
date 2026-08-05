@@ -14,7 +14,7 @@
                 email = user.gitEmail;
               };
               core = {
-                editor = "nvim";
+                editor = "hx";
               };
               init = {
                 defaultBranch = "master";

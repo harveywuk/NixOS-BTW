@@ -17,8 +17,8 @@
 
       home = {
         sessionVariables = {
-          EDITOR = "nvim";
-          VISUAL = "nvim";
+          EDITOR = "hx";
+          VISUAL = "hx";
           BROWSER = "firefox";
           TERMINAL = "kitty";
           SSH_ASKPASS_REQUIRE = "never";

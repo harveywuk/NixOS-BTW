@@ -45,29 +45,29 @@
             "x-scheme-handler/unknown" = "zen.desktop";
 
             # Text files
-            "text/plain" = "nvim.desktop";
-            "text/markdown" = "nvim.desktop";
-            "text/x-shellscript" = "nvim.desktop";
-            "text/x-python" = "nvim.desktop";
-            "text/x-csrc" = "nvim.desktop";
-            "text/x-c++src" = "nvim.desktop";
-            "text/x-java" = "nvim.desktop";
-            "text/javascript" = "nvim.desktop";
-            "application/javascript" = "nvim.desktop";
-            "text/css" = "nvim.desktop";
-            "application/json" = "nvim.desktop";
-            "application/xml" = "nvim.desktop";
-            "text/xml" = "nvim.desktop";
-            "text/x-yaml" = "nvim.desktop";
-            "application/x-yaml" = "nvim.desktop";
-            "text/x-rust" = "nvim.desktop";
-            "text/x-go" = "nvim.desktop";
-            "application/x-shellscript" = "nvim.desktop";
-            "text/x-lua" = "nvim.desktop";
-            "text/x-makefile" = "nvim.desktop";
-            "text/x-log" = "nvim.desktop";
-            "application/toml" = "nvim.desktop";
-            "text/x-nix" = "nvim.desktop";
+            "text/plain" = "hx.desktop";
+            "text/markdown" = "hx.desktop";
+            "text/x-shellscript" = "hx.desktop";
+            "text/x-python" = "hx.desktop";
+            "text/x-csrc" = "hx.desktop";
+            "text/x-c++src" = "hx.desktop";
+            "text/x-java" = "hx.desktop";
+            "text/javascript" = "hx.desktop";
+            "application/javascript" = "hx.desktop";
+            "text/css" = "hx.desktop";
+            "application/json" = "hx.desktop";
+            "application/xml" = "hx.desktop";
+            "text/xml" = "hx.desktop";
+            "text/x-yaml" = "hx.desktop";
+            "application/x-yaml" = "hx.desktop";
+            "text/x-rust" = "hx.desktop";
+            "text/x-go" = "hx.desktop";
+            "application/x-shellscript" = "hx.desktop";
+            "text/x-lua" = "hx.desktop";
+            "text/x-makefile" = "hx.desktop";
+            "text/x-log" = "hx.desktop";
+            "application/toml" = "hx.desktop";
+            "text/x-nix" = "hx.desktop";
 
             # Videos
             "video/mp4" = "mpv.desktop";
@@ -106,14 +106,14 @@
           };
         };
 
-        xdg.dataFile."applications/nvim.desktop".text = ''
+        xdg.dataFile."applications/hx.desktop".text = ''
           [Desktop Entry]
-          Name=Neovim
-          Exec=kitty -e nvim %F
+          Name=Helix
+          Exec=kitty -e hx %F
           Terminal=false
           Type=Application
           Keywords=Text;editor;
-          Icon=nvim
+          Icon=hx
           Categories=Utility;TextEditor;
           StartupNotify=false
         '';

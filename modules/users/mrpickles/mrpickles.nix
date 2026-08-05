@@ -12,6 +12,7 @@
         den.aspects.fastfetch
         den.aspects.fzf
         den.aspects.git
+        den.aspects.helix
         den.aspects.jj
         den.aspects.jq
         den.aspects.just
@@ -26,8 +27,8 @@
         den.aspects.starship
         # den.aspects.pure
         den.aspects.tealdeer
-        den.aspects.vscode
         den.aspects.yazi
+        den.aspects.zed
         den.aspects.zoxide
         den.aspects.fish
 

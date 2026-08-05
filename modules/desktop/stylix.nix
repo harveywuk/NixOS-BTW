@@ -71,8 +71,8 @@
             };
             # Disable the following, we already have more intricate Eldritch themes for these
             firefox.enable = false;
+            helix.enable = false;
             hyprland.enable = false;
-            neovim.enable = false;
             noctalia.enable = false;
             obsidian.enable = false;
             spicetify.enable = false;

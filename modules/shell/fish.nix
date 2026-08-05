@@ -35,7 +35,7 @@
           shellAliases = {
             dev = "cd ~/dev";
             findhere = "find . -name";
-            e = "nvim";
+            e = "hx";
           };
 
           functions = {
@@ -150,8 +150,8 @@
             set -gx NODE_OPTIONS "--max-old-space-size=8192"
             set -gx CMAKE_PREFIX_PATH "/usr/local:$CMAKE_PREFIX_PATH"
             set -gx LD_LIBRARY_PATH "/usr/local/lib:$LD_LIBRARY_PATH"
-            set -gx EDITOR ${if config.programs.neovim.enable or false then "nvim" else "vi"}
-            set -gx VISUAL ${if config.programs.neovim.enable or false then "nvim" else "vi"}
+            set -gx EDITOR ${if config.programs.helix.enable or false then "hx" else "vi"}
+            set -gx VISUAL ${if config.programs.helix.enable or false then "hx" else "vi"}
 
             if command -v cmake &>/dev/null; and command -v ninja &>/dev/null
               alias cmakeninja='cmake -S . -B build -G Ninja'

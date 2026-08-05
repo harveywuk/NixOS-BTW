@@ -11,11 +11,6 @@
       programs.kitty = {
         enable = true;
 
-        actionAliases = {
-          "kitty_scrollback_nvim" =
-            "kitten ${config.home.homeDirectory}/.config/kitty/kitty_scrollback_nvim.py";
-        };
-
         font = {
           name = "NeonMono";
           size = 16;
@@ -184,10 +179,6 @@
             "save_as_session --save-only --use-foreground-process --relocatable ~/.local/share/kitty/last-session.session";
           "ctrl+t>a" = "goto_session ~/.local/share/kitty/last-session.session";
 
-          # Scrollback with nvim
-          "kitty_mod+h" = "kitty_scrollback_nvim";
-          "kitty_mod+g" = "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
-
           # Font Management
           "kitty_mod+plus" = "change_font_size all +1.0";
           "kitty_mod+minus" = "change_font_size all -1.0";
@@ -206,8 +197,6 @@
 
         mouseBindings = {
           "right click" = "grabbed,ungrabbed paste_from_clipboard";
-          "ctrl+shift+right press" =
-            "ungrabbed combine : mouse_select_command_output : kitty_scrollback_nvim --config ksb_builtin_last_visited_cmd_output";
         };
       };
       programs.zsh.shellAliases = {
@@ -219,8 +208,6 @@
 
       home.file.".config/kitty/pass_keys.py".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/kitty/pass_keys.py";
-      home.file.".config/kitty/kitty_scrollback_nvim.py".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/kitty/kitty_scrollback_nvim.py";
       home.file.".config/kitty/kitty_scroll_prompt.py".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/kitty/kitty_scroll_prompt.py";
     };
