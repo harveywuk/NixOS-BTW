@@ -22,6 +22,10 @@
           dates = lib.mkDefault "daily";
           options = lib.mkDefault "--delete-older-than 5d";
         };
+        optimise = {
+          automatic = true;
+          dates = [ "weekly" ];
+        };
         settings = {
           # Push realised local builds into the personal Cachix cache.
           post-build-hook = pkgs.writeShellScript "push-to-sfdgahf12345-cachix" ''
@@ -51,7 +55,6 @@
             "nix-command"
             "flakes"
           ];
-          auto-optimise-store = true;
           substituters = [
             "https://cache.nixos.org"
             "https://nix-community.cachix.org"
