@@ -21,7 +21,6 @@
         den.aspects.mcp
         den.aspects.nh
         den.aspects.nix-index
-        den.aspects.nvim
         den.aspects.opencode
         den.aspects.payrespects
         den.aspects.starship

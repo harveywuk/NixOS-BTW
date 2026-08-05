@@ -59,7 +59,6 @@
             "https://cache.nixos.org"
             "https://nix-community.cachix.org"
             "https://hyprland.cachix.org"
-            "https://neonvoidx.cachix.org"
             "https://noctalia.cachix.org"
           ];
           trusted-substituters = [
@@ -69,8 +68,6 @@
             "https://nix-community.cachix.org"
             # hyprland cache
             "https://hyprland.cachix.org"
-            # Personal Cachix cache
-            "https://neonvoidx.cachix.org"
             # Noctalia
             "https://noctalia.cachix.org"
           ];

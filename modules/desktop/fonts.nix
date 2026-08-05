@@ -1,10 +1,9 @@
-{ den, inputs, ... }:
+{ den, ... }:
 {
   den.aspects.fonts.nixos =
     { pkgs, ... }:
     {
       fonts.packages = with pkgs; [
-        (inputs.neonmono.packages.${pkgs.stdenv.hostPlatform.system}.default)
         fira-sans
         inter
         roboto

@@ -44,14 +44,6 @@
       url = "github:vic/nix-versions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvim-config = {
-      url = "github:neonvoidx/nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    neonmono = {
-      url = "github:neonvoidx/NeonMono";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
@@ -61,10 +53,6 @@
     };
     scopebuddy = {
       url = "github:OpenGamingCollective/ScopeBuddy";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    eldritch-cursors = {
-      url = "github:eldritch-theme/cursors";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
