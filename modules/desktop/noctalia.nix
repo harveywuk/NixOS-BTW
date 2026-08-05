@@ -286,7 +286,7 @@
                         background_opacity = 0.78000000000000003;
                         background_padding = 0;
                         background_radius = 32;
-                        image_path = "${homeDir}/nix/assets/neonvoid.png";
+                        image_path = "${homeDir}/nix/assets/mr-pickles-logo.webp";
                         opacity = 1.0;
                       };
                     };
@@ -451,7 +451,7 @@
                         background_opacity = 0.78000000000000003;
                         background_padding = 0;
                         background_radius = 32;
-                        image_path = "${homeDir}/nix/assets/neonvoid.png";
+                        image_path = "${homeDir}/nix/assets/mr-pickles-logo.webp";
                         opacity = 1.0;
                       };
                     };
@@ -616,7 +616,7 @@
                         background_opacity = 0.78000000000000003;
                         background_padding = 0;
                         background_radius = 32;
-                        image_path = "${homeDir}/nix/assets/neonvoid.png";
+                        image_path = "${homeDir}/nix/assets/mr-pickles-logo.webp";
                         opacity = 1.0;
                       };
                     };
