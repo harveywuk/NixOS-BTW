@@ -45,6 +45,7 @@
         playerctl
         procps
         profile-sync-daemon
+        pulsar-mouse-linux
         ripgrep
         rtkit
         sd

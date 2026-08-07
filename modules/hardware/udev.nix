@@ -13,6 +13,7 @@
               yubikey-personalization
               arduino # provides udev rules for Arduino boards (ttyUSB/ttyACM access)
               meletrix-udev-rules
+              pulsar-mouse-linux
               qmk
               qmk-udev-rules
               qmk_hid
