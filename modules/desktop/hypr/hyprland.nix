@@ -578,7 +578,6 @@
                                 },
 
                                 misc = {
-                                  vfr = true,
                                   disable_hyprland_logo = false,
                                   animate_manual_resizes = true,
                                   focus_on_activate = true,
