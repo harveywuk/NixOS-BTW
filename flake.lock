@@ -1002,11 +1002,11 @@
     "pulsar-mouse-linux-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1786104520,
-        "narHash": "sha256-0JoADBIIzNtQQcGLQof+b89vv3VY2ZhRgg4jamgR4Hs=",
+        "lastModified": 1786105050,
+        "narHash": "sha256-FRBDVdg/lLQASETcFjWhmfET33TmoOumS2jzRaRwoIg=",
         "owner": "harveywuk",
         "repo": "pulsar-mouse-linux",
-        "rev": "f332bcfae64a6138668393179d5e492fc3ebe2e7",
+        "rev": "97541d92e94d3f7ed7cb5ea6377eb336f99bed01",
         "type": "github"
       },
       "original": {
