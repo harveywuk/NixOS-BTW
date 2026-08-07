@@ -94,8 +94,13 @@
           connect-timeout = 10;
           stalled-download-timeout = 100;
           download-attempts = 5;
+          keep-outputs = true;
         };
       };
+
+      # Skip installing packages' /share/doc (HTML/markdown docs); man pages
+      # stay enabled. Rarely read from a terminal-first setup.
+      documentation.doc.enable = false;
 
       # Log rebuild
       system.activationScripts.logRebuildTime = {

@@ -247,12 +247,10 @@
                     hl.env("XDG_SESSION_DESKTOP", "Hyprland")
                     hl.env("MOZ_ENABLE_WAYLAND", "1")
                     hl.env("EGL_PLATFORM", "wayland")
-                    hl.env("HYPRLAND_TRACE", "1")
                     hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Ice")
                     hl.env("HYPRCURSOR_SIZE", "32")
                     hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
                     hl.env("XCURSOR_SIZE", "32")
-                    hl.env("AQ_TRACE", "1")
 
                     -- -----------------------------------------------------------------------
                         -- Monitors
@@ -543,18 +541,6 @@
                                   workspace_wraparound = true,
                                 },
 
-                                dwindle = {
-                                  preserve_split = true,
-                                  force_split = 2,
-                                  default_split_ratio = 1,
-                                },
-
-                                scrolling = {
-                                  fullscreen_on_one_column = true,
-                                  column_width = 0.6,
-                                  direction = "right",
-                                },
-
                                 master = {
                                   new_status = "slave",
                                   new_on_top = false,
@@ -592,6 +578,7 @@
                                 },
 
                                 misc = {
+                                  vfr = true,
                                   disable_hyprland_logo = false,
                                   animate_manual_resizes = true,
                                   focus_on_activate = true,
@@ -605,10 +592,6 @@
                                   force_zero_scaling = true,
                                 },
 
-                                debug = {
-                                  disable_logs = false,
-                                },
-
                                 ecosystem = {
                                   no_update_news = true,
                                   no_donation_nag = true,
@@ -616,7 +599,6 @@
 
                                 cursor = {
                                   sync_gsettings_theme = true,
-                                  no_break_fs_vrr = 2,
                                   min_refresh_rate = 60,
                                   enable_hyprcursor = true,
                                   no_hardware_cursors = 1,
