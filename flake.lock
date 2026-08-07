@@ -999,6 +999,23 @@
         "type": "github"
       }
     },
+    "pulsar-mouse-linux-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786103638,
+        "narHash": "sha256-SnftgBrCUGGIGc/ADAM9XE/NAiMP91WBhIuJS7oKJCw=",
+        "owner": "harveywuk",
+        "repo": "pulsar-mouse-linux",
+        "rev": "c794c868b07ee01d64279411d938037dd61889e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "harveywuk",
+        "ref": "feinmann8k-driver",
+        "repo": "pulsar-mouse-linux",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bibata-hypr-src": "bibata-hypr-src",
@@ -1018,6 +1035,7 @@
         "nixpkgs": "nixpkgs_3",
         "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
+        "pulsar-mouse-linux-src": "pulsar-mouse-linux-src",
         "scopebuddy": "scopebuddy",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
