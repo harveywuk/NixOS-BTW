@@ -172,33 +172,45 @@
               # like motherboard IO audio devices
               (lib.mkIf (host ? audio) {
                 "51-disable-devices" = {
-                  "monitor.alsa.rules" = [{
-                    matches = map (n: { "node.name" = n; }) host.audio.disabledNodes;
-                    actions.update-props."node.disabled" = true;
-                  }];
+                  "monitor.alsa.rules" = [
+                    {
+                      matches = map (n: { "node.name" = n; }) host.audio.disabledNodes;
+                      actions.update-props."node.disabled" = true;
+                    }
+                  ];
                 };
                 "52-default-devices" = {
                   "monitor.alsa.rules" = [
                     {
-                      matches = [{ "node.name" = host.audio.defaultMic; }];
+                      matches = [ { "node.name" = host.audio.defaultMic; } ];
                       actions.update-props."priority.session" = 2000;
                     }
                     {
-                      matches = [{ "node.name" = host.audio.defaultSpeaker; }];
+                      matches = [ { "node.name" = host.audio.defaultSpeaker; } ];
                       actions.update-props."priority.session" = 1000;
                     }
                   ];
                 };
                 "53-bluez-devices" = {
-                  "monitor.bluez.rules" = [{
-                    matches = [{ "device.name" = host.audio.bluetoothCard; }];
-                    actions = {
-                      update-props = {
-                        "bluez5.auto-connect" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-                        "bluez5.hw-volume" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
+                  "monitor.bluez.rules" = [
+                    {
+                      matches = [ { "device.name" = host.audio.bluetoothCard; } ];
+                      actions = {
+                        update-props = {
+                          "bluez5.auto-connect" = [
+                            "hfp_hf"
+                            "hsp_hs"
+                            "a2dp_sink"
+                          ];
+                          "bluez5.hw-volume" = [
+                            "hfp_hf"
+                            "hsp_hs"
+                            "a2dp_sink"
+                          ];
+                        };
                       };
-                    };
-                  }];
+                    }
+                  ];
                 };
               })
             ];

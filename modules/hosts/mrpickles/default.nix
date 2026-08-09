@@ -47,13 +47,19 @@
         fileSystems."/mnt/games" = {
           device = "/dev/disk/by-uuid/a657733b-d5d0-47d7-815f-1c57b13b1f96";
           fsType = "xfs";
-          options = [ "defaults" "nofail" ];
+          options = [
+            "defaults"
+            "nofail"
+          ];
         };
 
         fileSystems."/mnt/storage" = {
           device = "/dev/disk/by-uuid/ddd50e18-2d1a-42a9-a576-a6190103a431";
           fsType = "xfs";
-          options = [ "defaults" "nofail" ];
+          options = [
+            "defaults"
+            "nofail"
+          ];
         };
 
         boot = {

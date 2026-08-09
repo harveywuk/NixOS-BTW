@@ -4,7 +4,12 @@
     { host, user, ... }:
     {
       homeManager =
-        { pkgs, osConfig, lib, ... }:
+        {
+          pkgs,
+          osConfig,
+          lib,
+          ...
+        }:
         let
           systemMounts = [
             "/"

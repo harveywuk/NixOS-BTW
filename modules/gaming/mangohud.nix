@@ -12,7 +12,7 @@
       homeManager =
         { lib, pkgs, ... }:
         let
-          mainMon = host.monitors.main or host.monitors.builtin or {};
+          mainMon = host.monitors.main or host.monitors.builtin or { };
           fpsMatch = builtins.match ".*@([0-9]+)\\.?[0-9]*" (mainMon.mode or "");
           fpsText = if fpsMatch != null then builtins.elemAt fpsMatch 0 else "60";
         in

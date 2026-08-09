@@ -1,0 +1,63 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel an in-flight run when the same branch is pushed again.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Nix needs room: evaluating this config realises the stylix palette
+      # generator and a fair amount of nixpkgs. The hosted runner ships
+      # ~14 GB free, most of it spent on toolchains this job never touches.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h /
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            accept-flake-config = true
+            substituters = https://cache.nixos.org https://nix-community.cachix.org https://hyprland.cachix.org https://noctalia.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc= noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=
+
+      # flake.nix is generated from modules/flake-inputs.nix. This fails if
+      # an input was edited without re-running `nix run .#write-flake`, which
+      # is otherwise easy to forget and only shows up later as a confusing
+      # "input not found".
+      - name: flake.nix is in sync with flake-inputs.nix
+        run: nix build --no-link .#checks.x86_64-linux.check-flake-file
+
+      # The real check. This type-checks every module, resolves every option
+      # and catches the whole class of errors a rebuild would hit - undefined
+      # options, type mismatches, bad interpolation, missing files - without
+      # compiling anything.
+      #
+      # Deliberately eval, not build: the CachyOS znver4 kernel and Proton
+      # builds are CPU-microarchitecture-specific and are not in any binary
+      # cache, so a real build would compile a kernel from source on every
+      # run. Verify those locally with:
+      #   nixos-rebuild build --flake .#nixos-btw
+      - name: Evaluate nixos-btw
+        run: |
+          nix eval .#nixosConfigurations.nixos-btw.config.system.build.toplevel.drvPath
+
+      - name: Formatting
+        run: |
+          nix fmt
+          git diff --exit-code || {
+            echo "::error::Formatting drift. Run 'nix fmt' and commit the result."
+            exit 1
+          }
