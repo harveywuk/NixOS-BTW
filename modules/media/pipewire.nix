@@ -110,24 +110,15 @@
                         { "application.name" = "~.*steam_app.*"; }
                         { "application.name" = "~.*pressure-vessel.*"; }
                         { "application.process.binary" = "~.*reaper.*"; }
-                        { "application.name" = "~.*World of Warcraft.*"; }
-                        { "application.name" = "~.*Diablo.*"; }
-                        { "application.name" = "~.*Overwatch.*"; }
-                        { "application.name" = "~.*Counter-Strike.*"; }
+                        # Native Linux titles need naming explicitly - they
+                        # never match the wine/proton/.exe/pressure-vessel
+                        # patterns above, which already cover every Proton
+                        # game generically. That is the only reason cs2 is
+                        # here and, say, a Proton-only title is not.
                         { "application.name" = "~.*cs2.*"; }
-                        { "application.name" = "~.*Dota.*"; }
-                        { "application.name" = "~.*Apex.*"; }
-                        { "application.name" = "~.*Fortnite.*"; }
                         { "application.name" = "~.*Unity.*"; }
                         { "application.name" = "~.*UnrealEngine.*"; }
                         { "application.name" = "~.*gameoverlayui.*"; }
-                        { "application.process.binary" = "~.*retroarch.*"; }
-                        { "application.process.binary" = "~.*dolphin-emu.*"; }
-                        { "application.process.binary" = "~.*pcsx2.*"; }
-                        { "application.process.binary" = "~.*rpcs3.*"; }
-                        { "application.process.binary" = "~.*yuzu.*"; }
-                        { "application.process.binary" = "~.*cemu.*"; }
-                        { "application.process.binary" = "~.*ryujinx.*"; }
                       ];
                       actions = {
                         update-props = {
