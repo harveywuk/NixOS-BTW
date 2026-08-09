@@ -4,6 +4,8 @@
 
 My NixOS configuration using the [den](https://github.com/denful/den) framework with [flake-parts](https://flake.parts/) and [import-tree](https://github.com/vic/import-tree).
 
+Originally based on [neonvoidx/nix](https://github.com/neonvoidx/nix) — see [Credits](#credits).
+
 ## Structure
 
 ```
@@ -259,6 +261,16 @@ mynewhost = {
 ## SOPS Secrets
 
 See `secrets/README.md`. Secrets are age-encrypted with per-machine standalone keys and decrypted to `/run/secrets/` at boot via a systemd service.
+
+## Credits
+
+This configuration started from [neonvoidx/nix](https://github.com/neonvoidx/nix) by [@neonvoidx](https://github.com/neonvoidx), which is where the den + flake-parts + import-tree structure, the scopebuddy/gamescope tuning and the SOPS layout came from. It has since diverged substantially — different hosts, hardware, desktop and module set — but the foundation was theirs, and it saved me a great deal of work. Thanks!
+
+Also using:
+
+- [den](https://github.com/denful/den) — the aspect framework this config is built on
+- [Noctalia](https://github.com/noctalia-dev/noctalia) — desktop shell and greeter
+- [Chaotic-Nyx](https://github.com/chaotic-cx/nyx) — CachyOS kernel and Proton builds
 
 ## Notes to self
 
