@@ -31,7 +31,6 @@
           '';
           # Home manager modules
           sharedModules = [
-            inputs.spicetify-nix.homeManagerModules.default
             inputs.nix-index-database.homeModules.default
             inputs.noctalia.homeModules.default
           ];

@@ -75,7 +75,6 @@
             hyprland.enable = false;
             noctalia.enable = false;
             obsidian.enable = false;
-            spicetify.enable = false;
             yazi.enable = false;
           };
         };
