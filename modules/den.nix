@@ -46,7 +46,7 @@
         # Makes user admin (wheel and networkmanager)
         den._.primary-user
         # Sets shell for user at OS and HM level
-        (den._.user-shell "zsh")
+        (den._.user-shell "fish")
         # Provides per system inputs'
         # i.e environment.systemPackages = [ inputs'.nixpkgs.legacyPackages.hello ]
         den._.inputs'

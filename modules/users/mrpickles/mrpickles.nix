@@ -61,22 +61,22 @@
         den.aspects.cava
         den.aspects.easyeffects
         den.aspects.mpv
-        # My personal wallpapers
-        # pulls from my repo, if you want to pull your own
-        # wallpaper pics repo, change pics.nix url
+        # Wallpapers: symlinks assets/wallpapers in this repo to ~/pics,
+        # which is the path Noctalia's wallpaper picker expects. No remote
+        # fetch involved - see modules/media/pics.nix.
         den.aspects.pics
 
-        # Gaming
-        den.aspects.steam
-        den.aspects.mangohud
-        den.aspects.winboat
-
         # Communication
-        # Setups thunderbird and protonmailbridge, unique to my user, edit email.nix to setup your accounts
         den.aspects.vesktop
       ]
       ++ lib.optionals (host.isGaming or false) [
-        # Gaming — gated via host.isGaming
+        # Gated on host.isGaming (set per-host in modules/hosts.nix) so a
+        # non-gaming host does not pull Steam and friends. These used to sit
+        # in the unconditional list above while this block sat empty, which
+        # meant the flag existed but decided nothing.
+        den.aspects.steam
+        den.aspects.mangohud
+        den.aspects.winboat
       ];
 
       nixos =

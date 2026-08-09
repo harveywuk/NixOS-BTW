@@ -450,7 +450,6 @@
                               hl.window_rule({ name = "xdgfilepicker", match = { class = "xdg-desktop-portal-gtk" }, float = true, center = true, size = floating_default_size, max_size = floating_max_size })
                               hl.window_rule({ name = "gnomekeyringprompt", match = { title = "Unlock Login Keying" }, float = true, pin = true })
                               hl.window_rule({ name = "hyprpopup", match = { class = "hyprland-dialog" }, pin = true })
-                              hl.window_rule({name="thunderbird", match={class="thunderbird"}, workspace="12 silent", suppress_event="activatefocus"})
                               hl.window_rule({
                                 name = "xwaylandhelper",
                                 match = { xwayland = true, title = "^$", class = "^$", initial_class = "^$", initial_title = "^$" },
@@ -461,13 +460,6 @@
                               })
                               hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "13 silent" })
                               hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "2 silent" })
-                              ${lib.optionalString isMultiMonitor /* lua */ ''
-                                hl.window_rule({ name = "spotify", match = { class = "spotify" }, workspace = "13 silent" })
-                                hl.window_rule({ name = "fractal", match = { class = "org.gnome.Fractal" }, workspace = "12 silent" })
-                              ''}
-                              ${lib.optionalString (!isMultiMonitor) /* lua */ ''
-                                hl.window_rule({ name = "spotifyframe", match = { class = "spotify" }, workspace = "12 silent" })
-                              ''}
 
                               hl.window_rule({ name = "godot_all", match = { class = "Godot" }, workspace = "6", float = true })
                               hl.window_rule({ name = "godot_game", match = { title = ".*(DEBUG).*", initial_title = "Godot" }, workspace = "11", float = true, max_size = floating_max_size })
@@ -493,7 +485,6 @@
                               hl.window_rule({ name = "battlenet", match = { initial_class = "battle.net.exe" }, float = false, fullscreen = false, fullscreen_state = "0 0", workspace = "10 silent", suppress_event = "fullscreen activatefocus" })
                               hl.window_rule({ name = "bnettray", match = { class = "steam_app_0", title = "^$" }, workspace = "10", float = true, fullscreen = false })
 
-                              hl.window_rule({ name = "thunderbirdreminder", match = { class = "org.mozilla.Thunderbird", title = "^.*Reminder.*$" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size })
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
                               hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
                               hl.window_rule({ name = "browser-opaque", match = { class = "^(firefox|zen)$" }, opacity = "1.0 override" })
@@ -683,8 +674,6 @@
                                 hl.exec_cmd("systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-hyprland.service")
                                 hl.exec_cmd("~/.config/hypr/scripts/save-workspace.sh")
                                 hl.exec_cmd("xrandr --output ${defaultMonitor} --primary")
-                                hl.exec_cmd("sleep 8 && thunderbird", { workspace = "12 silent" })
-                                hl.exec_cmd("spotify --enable-features=UseOzonePlatform --ozone-platform=wayland", {workspace = "13 silent"})
                                 hl.exec_cmd("steam", { workspace = "10 silent" })
                                 ${lib.optionalString (portraitMonitor != "") /* lua */ ''
                                   hl.exec_cmd("~/.config/hypr/scripts/wait-for-vesktop-and-move.sh")
