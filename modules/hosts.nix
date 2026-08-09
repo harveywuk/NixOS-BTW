@@ -1,8 +1,8 @@
 { den, ... }:
 let
   mrpickles = {
-    gitName = "Mrpickles";
-    gitEmail = "harvey.weaver@accounts.uk";
+    gitName = "harveywuk";
+    gitEmail = "accounts@harveyweaver.uk";
     emailName = "hw";
     emailAddress = "harvey.weaver@accounts.uk";
   };
@@ -57,7 +57,7 @@ in
       xRes = "3440";
       yRes = "1440";
 
-      greeting = "The Void";
+      greeting = "NixBTW";
       timezone = timezone;
       isGaming = true;
     };
