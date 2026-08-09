@@ -1,0 +1,10 @@
+# Build symlinks created by `nix build` / `nixos-rebuild build`. These point
+# into /nix/store and change on every build, so tracking them means the tree
+# is permanently dirty and every nix command prints "Git tree is dirty".
+result
+result-*
+
+# Scratch clones / checkouts of other projects that sometimes get made inside
+# this repo. Not part of the config; ignored so they stop showing up as
+# untracked noise in `git status`.
+/ng-check/
