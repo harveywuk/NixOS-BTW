@@ -54,9 +54,9 @@
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pulsar-mouse-linux-src = {
+    pulsar-mouse-linux = {
       url = "github:harveywuk/pulsar-mouse-linux/feinmann8k-driver";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     scopebuddy = {
       url = "github:OpenGamingCollective/ScopeBuddy";

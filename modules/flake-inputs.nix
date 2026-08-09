@@ -44,9 +44,9 @@
       url = "github:vic/nix-versions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    pulsar-mouse-linux-src = {
+    pulsar-mouse-linux = {
       url = "github:harveywuk/pulsar-mouse-linux/feinmann8k-driver";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
