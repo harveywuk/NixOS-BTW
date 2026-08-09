@@ -10,7 +10,6 @@
             udev.packages = with pkgs; [
               game-devices-udev-rules
               steam-devices-udev-rules
-              yubikey-personalization
               arduino # provides udev rules for Arduino boards (ttyUSB/ttyACM access)
               pulsar-mouse-linux
               qmk

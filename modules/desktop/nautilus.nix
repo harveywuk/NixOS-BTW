@@ -10,8 +10,7 @@
         services.gvfs.enable = true;
         services.tumbler.enable = true;
 
-        # "Open Terminal Here" context menu entry — Nautilus equivalent
-        # of Thunar's custom UCA action for the same thing.
+        # "Open Terminal Here" context menu entry
         programs.nautilus-open-any-terminal = {
           enable = true;
           terminal = "kitty";

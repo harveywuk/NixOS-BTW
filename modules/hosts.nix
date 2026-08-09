@@ -4,7 +4,7 @@ let
     gitName = "harveywuk";
     gitEmail = "accounts@harveyweaver.uk";
     emailName = "hw";
-    emailAddress = "harvey.weaver@accounts.uk";
+    emailAddress = "accounts@harveyweaver.uk";
   };
   timezone = "Europe/London";
 in

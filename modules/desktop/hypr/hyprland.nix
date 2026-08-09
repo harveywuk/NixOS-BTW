@@ -487,7 +487,7 @@
 
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
                               hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
-                              hl.window_rule({ name = "browser-opaque", match = { class = "^(firefox|zen)$" }, opacity = "1.0 override" })
+                              hl.window_rule({ name = "browser-opaque", match = { class = "^zen$" }, opacity = "1.0 override" })
                               hl.window_rule({ name = "sgdbooppopup", match = { class = "SGDBoop" }, float = true, max_size = floating_max_size })
 
                               -- -----------------------------------------------------------------------

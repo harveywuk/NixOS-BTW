@@ -105,7 +105,6 @@
             wrap = "yes";
             tab_size = 2;
             syntax = {
-              theme = "Eldritch";
               background = "#212337";
             };
           };

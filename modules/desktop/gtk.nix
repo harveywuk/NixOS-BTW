@@ -16,7 +16,7 @@
             "/run"
             "/tmp"
           ];
-          # Dynamically add bookmarks for Thunar for non system mounts
+          # Dynamically add bookmarks for non-system mounts
           extraFsBookmarks = map (mp: "file://${mp}") (
             builtins.filter (mp: !builtins.elem mp systemMounts) (builtins.attrNames osConfig.fileSystems)
           );
@@ -45,7 +45,7 @@
           # Seed gtk-3.0/bookmarks ONCE as a plain file, rather than using
           # the built-in gtk.gtk3.bookmarks option (which hard-symlinks the
           # file into the Nix store on every rebuild, silently discarding
-          # anything added or removed via Nautilus/Thunar's sidebar).
+          # anything added or removed via Nautilus's sidebar).
           home.activation.seedGtkBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             BOOKMARKS_FILE="$HOME/.config/gtk-3.0/bookmarks"
             if [ ! -e "$BOOKMARKS_FILE" ]; then

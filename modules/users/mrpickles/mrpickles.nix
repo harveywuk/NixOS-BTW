@@ -41,7 +41,6 @@
         den.aspects.flatpak
         den.aspects.clipboard
         den.aspects.cursor
-        den.aspects.firefox
         den.aspects.gtk
         den.aspects.hyprland
         den.aspects.satty

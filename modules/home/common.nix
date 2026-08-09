@@ -19,7 +19,7 @@
         sessionVariables = {
           EDITOR = "hx";
           VISUAL = "hx";
-          BROWSER = "firefox";
+          BROWSER = "zen";
           TERMINAL = "kitty";
           SSH_ASKPASS_REQUIRE = "never";
         };

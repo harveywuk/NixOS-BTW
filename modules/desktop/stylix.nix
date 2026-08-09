@@ -30,7 +30,7 @@
             size = 32;
           };
 
-          base16Scheme = "${pkgs.base16-schemes}/share/themes/eldritch.yaml";
+          image = "${inputs.self}/assets/wallpapers/ultrawide/wallhaven-5gqrp3.jpg";
 
           fonts = {
             serif = {
@@ -69,8 +69,7 @@
               platform = lib.mkForce "qtct";
               standardDialogs = "xdgdesktopportal";
             };
-            # Disable the following, we already have more intricate Eldritch themes for these
-            firefox.enable = false;
+            # Disable the following, we already have more intricate themes for these
             helix.enable = false;
             hyprland.enable = false;
             noctalia.enable = false;

@@ -17,14 +17,11 @@
       den.aspects.kernel
       den.aspects.openrgb
 
-      # Network printer stuff, specific to my network
-      den.aspects.print
       den.aspects.udev
 
       # Security
       den.aspects.sops
       den.aspects.pcscd
-      # den.aspects.ly
       den.aspects.noctalia-greeter
       den.aspects.polkit
 
