@@ -80,10 +80,6 @@
             "nvidia-drm.modeset=1"
             "nvidia_drm.fbdev=1"
           ];
-          blacklistedKernelModules = [
-            #"mt7925e"
-            #"snd_hda_intel"
-          ];
         };
 
         hardware = {
@@ -114,7 +110,7 @@
           WLR_LOG = "info";
         };
         systemd.services.greetd.serviceConfig = {
-          StanardOutput = "journal";
+          StandardOutput = "journal";
           StandardError = "journal";
         };
 

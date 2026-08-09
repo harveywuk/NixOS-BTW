@@ -10,23 +10,22 @@
       # System wide packages
       environment.systemPackages = with pkgs; [
         bc
+        # bind's outputsToInstall is [out dnsutils host], so this already
+        # provides dig/delv/nslookup/host - a separate `dig` entry is the
+        # same derivation again.
         bind
         bluetui
-        bluez
         bpftune
         brightnessctl
         cachix
         choose
         claude-code
-        cron
-        dig
         ddcutil
         dust
         fbset
         fd
         file
         gnupg
-        gzip
         high-tide
         hydra-check
         iperf3
@@ -43,11 +42,9 @@
         nvd
         pciutils
         playerctl
-        procps
         profile-sync-daemon
         pulsar-mouse-linux
         ripgrep
-        rtkit
         sd
         swappy
         traceroute
@@ -59,8 +56,9 @@
         via
         wget
         whois
+        # Used by the hypr resume hook and screen-toggle.sh: XWayland Steam
+        # games read xrandr primary for resolution.
         xrandr
-        xwayland
         zip
       ];
     };

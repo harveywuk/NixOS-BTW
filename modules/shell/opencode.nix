@@ -6,6 +6,9 @@
       programs = {
         # NOTE: Input/Output token costs
         # https://opencode.ai/docs/zen#pricing
+        # The `oc` alias lives in fish.nix's shellAliases - it used to be set
+        # via programs.zsh.initContent here, but zsh is not enabled and the
+        # shell is fish, so it never took effect.
         opencode = {
           enable = true;
           enableMcpIntegration = true;
@@ -47,7 +50,6 @@
             diff_style = "auto";
           };
         };
-        zsh.initContent = "alias oc=opencode";
       };
     };
 }

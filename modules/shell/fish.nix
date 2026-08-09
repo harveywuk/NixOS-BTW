@@ -36,6 +36,7 @@
             dev = "cd ~/dev";
             findhere = "find . -name";
             e = "hx";
+            oc = "opencode";
           };
 
           functions = {

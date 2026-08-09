@@ -1,27 +1,18 @@
 { den, ... }:
 {
   den.aspects.easyeffects.homeManager =
+    { ... }:
     {
-      pkgs,
-      config,
-      lib,
-      ...
-    }:
-    {
-      xdg.configFile = {
-        "easyeffects/autoload/easyeffectsrc".source =
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/easyeffects/autoload/easyeffectsrc";
-        "easyeffects/autoload/microphone.json".source =
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/easyeffects/autoload/microphone.json";
-        "easyeffects/autoload/speexrc".source =
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/easyeffects/autoload/speexrc";
-        "easyeffects/autoload/equalizerrc".source =
-          config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/assets/easyeffects/autoload/equalizerrc";
-      };
-
-      # EasyEffects 8.x uses Qt/KDE config instead of dconf
-      # Note: Qt version doesn't have system tray support - feature was removed in Qt port
-      # Settings are managed via ~/.config/easyeffects/autoload/easyeffectsrc and db/easyeffectsrc
+      # EasyEffects 8.x (Qt port) keeps its settings in
+      # ~/.config/easyeffects/db/easyeffectsrc, which the app owns and
+      # rewrites itself - it is not managed from here.
+      #
+      # This used to symlink easyeffectsrc/equalizerrc/speexrc/microphone.json
+      # into ~/.config/easyeffects/autoload/, but 8.x never reads those
+      # filenames from autoload/ (that directory is for device -> preset
+      # mappings), so all four were inert - which is what the old
+      # "TODO doesn't seem to autoload" comment was actually describing.
+      # Removed 2026-08-09; configure EasyEffects via its GUI instead.
       services.easyeffects.enable = true;
     };
 }

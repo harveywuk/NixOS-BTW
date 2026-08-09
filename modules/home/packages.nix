@@ -26,8 +26,6 @@
         gh-dash
         gpu-screen-recorder
         grim
-        gvfs
-        home-manager
         hyprpicker
         hyprpwcenter
         hyprshutdown
