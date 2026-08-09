@@ -115,7 +115,16 @@
                         # patterns above, which already cover every Proton
                         # game generically. That is the only reason cs2 is
                         # here and, say, a Proton-only title is not.
+                        # Verify these against reality rather than trusting
+                        # the names below - with the game running:
+                        #   pw-dump | jq -r '.[].info.props
+                        #     | select(."application.name")
+                        #     | ."application.name", ."application.process.binary"'
                         { "application.name" = "~.*cs2.*"; }
+                        { "application.name" = "~.*[Dd]eadlock.*"; }
+                        { "application.name" = "~.*[Vv]alheim.*"; }
+                        { "application.name" = "~.*Team Fortress.*"; }
+                        { "application.process.binary" = "~.*tf_linux.*"; }
                         { "application.name" = "~.*Unity.*"; }
                         { "application.name" = "~.*UnrealEngine.*"; }
                         { "application.name" = "~.*gameoverlayui.*"; }
