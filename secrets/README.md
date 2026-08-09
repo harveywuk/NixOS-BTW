@@ -32,14 +32,14 @@ sudo cat /etc/sops/age/key.txt | grep "^# public key:"
 1. Add the new public key to `.sops.yaml`:
    ```yaml
    keys:
-     - &admin_neonvoid age1p7jngse0vtfer554m7kq6dxkakfr5hpkl4sel4hfz3elpm0mmuxqcjcj6r
+     - &admin_mrpickles age1h8nd2rsr3yrh6jpjrkxdydn880p57xv8tdj0lxem6npe8mmdu99sf2ne8j
      - &machinename_boot age1abc...  # new machine key
 
    creation_rules:
      - path_regex: secrets/secrets\.yaml$
        key_groups:
          - age:
-             - *admin_neonvoid
+             - *admin_mrpickles
              - *machinename_boot
    ```
 
