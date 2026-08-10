@@ -8,6 +8,7 @@
         stylix = {
           enable = true;
           polarity = "dark";
+          base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
 
           targets.kmscon.enable = false;
           targets.qt = {
@@ -63,18 +64,25 @@
         stylix = {
           autoEnable = true;
           targets = {
-            cava.rainbow.enable = true;
             # Force qtct styling for qt dialogs
             qt = {
               platform = lib.mkForce "qtct";
               standardDialogs = "xdgdesktopportal";
             };
             # Disable the following, we already have more intricate themes for these
+            bat.enable = false;
+            cava.enable = false;
             helix.enable = false;
             hyprland.enable = false;
+            kitty.enable = false;
+            lazygit.enable = false;
             noctalia.enable = false;
             obsidian.enable = false;
+            opencode.enable = false;
+            starship.enable = false;
+            vesktop.enable = false;
             yazi.enable = false;
+            zed.enable = false;
           };
         };
       };

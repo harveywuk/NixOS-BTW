@@ -6,6 +6,13 @@
       programs.yazi = {
         enable = true;
         shellWrapperName = "y";
+        flavors.dracula = pkgs.fetchFromGitHub {
+          owner = "dracula";
+          repo = "yazi";
+          rev = "1b1a8d1083474defa9e4c1c3de4db9576f23175f";
+          hash = "sha256-wie3trdC7nGGOvuPTzo8SG9lg+lKKQb2tlMjrLVMMRU=";
+        };
+        theme.flavor.use = "dracula";
         keymap = {
           mgr.prepend_keymap = [
             {

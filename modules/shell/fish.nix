@@ -17,9 +17,6 @@
         lib,
         ...
       }:
-      let
-        c = config.lib.stylix.colors;
-      in
       {
         programs.fish = {
           enable = true;
@@ -139,7 +136,8 @@
 
             set -gx ZSH_TAB_TITLE_ONLY_FOLDER "true"
             set -gx FZF_PREVIEW_ADVANCED "bat"
-            set -gx FZF_DEFAULT_OPTS "--color=fg:#${c.base05},bg:#${c.base00},hl:#${c.base0B} --color=fg+:#${c.base05},bg+:#${c.base01},hl+:#${c.base0B} --color=info:#${c.base0A},prompt:#${c.base0C},pointer:#${c.base0D} --color=marker:#${c.base0D},spinner:#${c.base0A},header:#${c.base03} --height 80% --layout reverse --border"
+            # Official Dracula theme: https://draculatheme.com/fzf
+            set -gx FZF_DEFAULT_OPTS "--color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9 --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9 --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6 --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4 --height 80% --layout reverse --border"
             set -gx FZF_PATH "$HOME/.config/fzf"
             set -gx _ZO_EXCLUDE_DIRS "/Applications/**:**/node_modules"
             set -gx _ZO_RESOLVE_SYMLINKS "0"

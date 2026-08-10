@@ -3,6 +3,11 @@
   den.aspects.zed.homeManager =
     { pkgs, ... }:
     {
-      home.packages = [ pkgs.zed-editor ];
+      programs.zed-editor = {
+        enable = true;
+        package = pkgs.zed-editor;
+        extensions = [ "dracula" ];
+        userSettings.theme = "Dracula";
+      };
     };
 }

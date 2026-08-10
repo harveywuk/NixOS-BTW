@@ -11,6 +11,9 @@
       programs.kitty = {
         enable = true;
 
+        # Official Dracula theme: https://draculatheme.com/kitty
+        themeFile = "Dracula";
+
         font = {
           name = "NeonMono";
           size = 16;
