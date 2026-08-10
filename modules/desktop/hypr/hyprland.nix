@@ -579,7 +579,6 @@
                                 },
                               })
 
-                              hl.device({ name = "logitech-wireless-mouse-pid:4099-mouse", scroll_factor = 0.8 })
                               -- Animation curves
                               hl.curve("specialWorkSwitch", { type = "bezier", points = { { 0.05, 0.7 }, { 0.1, 1 } } })
                               hl.curve("emphasizedAccel", { type = "bezier", points = { { 0.3, 0 }, { 0.8, 0.15 } } })

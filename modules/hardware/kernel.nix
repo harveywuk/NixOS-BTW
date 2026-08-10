@@ -31,8 +31,6 @@
           }
         );
 
-      boot.blacklistedKernelModules = [ "hid_logitech_hidpp" ];
-
       # Exposes DDC/CI monitors as /sys/class/backlight devices, so brightness
       # can be controlled the same way as a laptop panel instead of via
       # userspace ddcutil (which fails DDC/CI writes on some monitors, e.g.

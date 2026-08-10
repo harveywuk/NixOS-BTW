@@ -13,7 +13,6 @@
         den.aspects.fzf
         den.aspects.git
         den.aspects.helix
-        den.aspects.jj
         den.aspects.jq
         den.aspects.just
         den.aspects.kitty
