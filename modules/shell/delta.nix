@@ -12,7 +12,6 @@
           programs.delta = {
             enable = true;
             enableGitIntegration = true;
-            enableJujutsuIntegration = true;
             options = {
               syntax-theme = "base16";
               line-numbers = true;
