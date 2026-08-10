@@ -131,11 +131,7 @@
           __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         };
 
-        environment.systemPackages = with pkgs; [
-          #sbctl
-          #amdgpu_top
-          #blender-rocm
-        ];
+        environment.systemPackages = with pkgs; [ ];
       };
   };
 }

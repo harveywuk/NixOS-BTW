@@ -345,7 +345,7 @@
                               local w = hl.get_active_window()
                               if w then
                                 local cls = w.class
-                                if cls and (cls:match("^steam_app_") or cls == "gamescope" or cls == "wow.exe") then return end
+                                if cls and (cls:match("^steam_app_") or cls == "gamescope") then return end
                                 hl.dispatch(hl.dsp.window.drag())
                               end
                             end, { mouse = true })
@@ -442,8 +442,6 @@
                               local floating_max_size = { "(monitor_w*0.8)", "(monitor_h*0.8)" }
                               local floating_default_size = { "(monitor_w*0.6)", "(monitor_h*0.6)" }
 
-                              hl.window_rule({ name = "blender-file", match = { initial_title = "File Browser", class="blender" }, float = true, center = true, max_size = floating_max_size, size = floating_default_size })
-
                               hl.window_rule({ name = "xdg-screenshare-picker", match = { initial_title = "Select what to share" }, float = true, center = true, max_size = floating_max_size })
                               hl.window_rule({ name = "satty", match = { class = "com.gabm.satty" }, float = true, max_size = floating_max_size })
                               hl.window_rule({ name = "noctalia_settings", match = { class = "dev.noctalia.Noctalia", title="Noctalia Settings" }, float = true, center = true, max_size = floating_max_size, size=floating_default_size })
@@ -461,29 +459,14 @@
                               hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "13 silent" })
                               hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "2 silent" })
 
-                              hl.window_rule({ name = "godot_all", match = { class = "Godot" }, workspace = "6", float = true })
-                              hl.window_rule({ name = "godot_game", match = { title = ".*(DEBUG).*", initial_title = "Godot" }, workspace = "11", float = true, max_size = floating_max_size })
-                              hl.window_rule({ name= "godot_float", match = {class="org.godotengine.*", float=true}, max_size = floating_max_size, center=true, size=floating_default_size})
-
                               hl.window_rule({ match = { content = "game", fullscreen = true }, confine_pointer = true })
                               hl.window_rule({ name = "steampopup", match = { title = "Steamwebhelper" }, workspace = "10 silent", suppress_event = "activatefocus" })
                               hl.window_rule({ name = "steamnotification", match = { class = "steam", title = "^notificationtoasts" }, pin=true, suppress_event = "activatefocus", float=true, opacity = "1.0 override" })
                               hl.window_rule({ name = "steamsignin", match = { initial_title = "Sign in to Steam", initial_class = "steam" }, float = true, center = true, max_size = floating_max_size, suppress_event = "activatefocus", workspace = "10 silent" })
                               hl.window_rule({ name = "steam", match = { class = "steam|Steam" }, workspace = "10 silent", suppress_event = "activatefocus" })
                               hl.window_rule({ name = "steamgames", match = { class = "^steam_app_.*$" }, workspace = "11", fullscreen = true, content="game"})
-                              hl.window_rule({ name = "lostarksplash", match = { class = "^steam_app_.*$", initial_title = "SplashScreen" }, float = true, center = true, max_size = floating_max_size, fullscreen = false, workspace = "11" })
-                              hl.window_rule({ name = "ffxiv", match = { title = "FINAL FANTASY XIV" }, workspace = "11", float = false, fullscreen = true, content="game"  })
                               hl.window_rule({ name = "gamescopegames", match = { class = "gamescope" }, workspace = "11" })
-                              hl.window_rule({ name = "wow", match = { initial_class = "wow.exe" }, monitor = default_monitor, workspace = "11", fullscreen = true, suppress_event = "fullscreen", content = "game", no_max_size = true, no_anim = true, no_shadow = true, no_dim = true, border_size = 0, no_blur = true, decorate = false, immediate = true, float = false})
-                              hl.window_rule({ name = "wowxwayland", match = { initial_class = "steam_app_0", title = "World of Warcraft" }, monitor = default_monitor, workspace = "11", fullscreen = true, suppress_event = "fullscreen", content = "game", no_max_size = true, no_anim = true, no_shadow = true, no_dim = true, border_size = 0, no_blur = true, decorate = false, immediate = true, float = false})
                               hl.window_rule({ name = "hytale", match = { title = "Hytale", class = "HytaleClient" }, fullscreen = true, workspace = "11" , content="game"})
-
-                              hl.window_rule({ name = "battlenetxwayland", match = { title = "^Battle.net.*" }, float = false, fullscreen = false, fullscreen_state = "0 0", workspace = "10 silent", suppress_event = "fullscreen activatefocus" })
-                              hl.window_rule({ name = "bnetgifts", match = { class = "steam_app_0", title = "Gifts" }, float = true, fullscreen = false, fullscreen_state = "0 0", workspace = "10", suppress_event = "fullscreen" })
-                              hl.window_rule({ name = "bnetwhispers", match = { title = "Battle.net.*Chats and Groups" }, float = true, fullscreen = false, fullscreen_state = "0 0", workspace = "10", suppress_event = "fullscreen" })
-                              hl.window_rule({ name = "bnettrayiconwindow", match = { initial_class = "explorer.exe" }, float = true, size = { "25", "25" }, move = reminder_move, fullscreen = false, workspace = "10 silent", suppress_event = "fullscreen activatefocus" })
-                              hl.window_rule({ name = "battlenet", match = { initial_class = "battle.net.exe" }, float = false, fullscreen = false, fullscreen_state = "0 0", workspace = "10 silent", suppress_event = "fullscreen activatefocus" })
-                              hl.window_rule({ name = "bnettray", match = { class = "steam_app_0", title = "^$" }, workspace = "10", float = true, fullscreen = false })
 
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
                               hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
