@@ -3,8 +3,6 @@
 MODE="${1:-}"
 PRIMARY_MONITOR="${2:-DP-2}"
 SECONDARY_MONITOR="${3:-DP-3}"
-PORTRAIT_MONITOR="${4:-HDMI-A-1}"
-WORKSPACES_TO_MOVE=(1 2 4 5 6 7 8 9 10 11) # everything but discord/spotify workspace
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/hypr"
 GAMESCREEN_STATE_FILE="$STATE_DIR/gamescreen"
 SCREEN_STATE_FILE="$STATE_DIR/screen"
@@ -49,20 +47,13 @@ if [ "$MODE" = "1" ]; then
 
   # Enforce workspace-to-monitor bindings after layout transition.
   dispatch_move_workspace 1  "$PRIMARY_MONITOR"
-  dispatch_move_workspace 2  "$SECONDARY_MONITOR"
-  dispatch_move_workspace 3  "$PRIMARY_MONITOR"
+  dispatch_move_workspace 2  "$PRIMARY_MONITOR"
+  dispatch_move_workspace 3  "$SECONDARY_MONITOR"
   dispatch_move_workspace 4  "$PRIMARY_MONITOR"
   dispatch_move_workspace 5  "$PRIMARY_MONITOR"
   dispatch_move_workspace 6  "$PRIMARY_MONITOR"
-  dispatch_move_workspace 7  "$PRIMARY_MONITOR"
-  dispatch_move_workspace 8  "$PRIMARY_MONITOR"
-  dispatch_move_workspace 9  "$PRIMARY_MONITOR"
-  dispatch_move_workspace 10 "$PRIMARY_MONITOR"
-  dispatch_move_workspace 11 "$PRIMARY_MONITOR"
-  dispatch_move_workspace 12 "$SECONDARY_MONITOR"
-  dispatch_move_workspace 13  "$PORTRAIT_MONITOR"
 
-  # Cursor default must follow the active primary monitor, never portrait.
+  # Cursor default must follow the active primary monitor.
   set_cursor_default_monitor "$PRIMARY_MONITOR"
   dispatch_focus_monitor "$PRIMARY_MONITOR"
 
@@ -86,11 +77,11 @@ else
   sleep 0.5
 
   # Move every workspace to the secondary monitor.
-  for ws in 1 2 3 4 5 6 7 8 9 10 11 12; do
+  for ws in 1 2 3 4 5 6; do
     dispatch_move_workspace "$ws" "$SECONDARY_MONITOR"
   done
 
-  # Cursor default must follow the active primary monitor, never portrait.
+  # Cursor default must follow the active primary monitor.
   set_cursor_default_monitor "$SECONDARY_MONITOR"
   dispatch_focus_monitor "$SECONDARY_MONITOR"
 

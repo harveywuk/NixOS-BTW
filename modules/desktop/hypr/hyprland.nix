@@ -27,12 +27,10 @@
           monitors = host.monitors or { };
           mainMon = monitors.main or { };
           secondaryMon = monitors.secondary or { };
-          portraitMon = monitors.portrait or { };
           builtinMon = monitors.builtin or { };
 
           defaultMonitor = mainMon.name or "";
           secondaryMonitor = secondaryMon.name or "";
-          portraitMonitor = portraitMon.name or "";
 
           mkMonitorAttrs =
             monAttrs:
@@ -89,7 +87,6 @@
                       monListLua [
                         mainMon
                         secondaryMon
-                        portraitMon
                         {
                           output = "";
                           mode = "preferred";
@@ -104,7 +101,6 @@
                     ${
                       monListLua [
                         secondaryMon
-                        portraitMon
                         {
                           output = "";
                           mode = "preferred";
@@ -163,7 +159,6 @@
               local mod = "SUPER"
               local default_monitor = "${defaultMonitor}"
               local secondary_monitor = "${secondaryMonitor}"
-              local portrait_monitor = "${portraitMonitor}"
 
               ${monLayoutsLua}
 
@@ -183,49 +178,6 @@
               function move_workspace_to_monitor(workspace, monitor)
               hl.dispatch(hl.dsp.workspace.move({ workspace = tostring(workspace), monitor = monitor }))
               end
-
-              -- -----------------------------------------------------------------------
-              -- Monitor helpers
-              -- -----------------------------------------------------------------------
-
-              local function is_monitor_active(name)
-              local monitors = hl.get_monitors()
-              if not monitors then
-              return false
-              end
-              for _, m in ipairs(monitors) do
-              if m.name == name then
-              return true
-              end
-              end
-              return false
-              end
-
-              local function move_ws_from_hdmi(ws_id)
-              if ws_id == 13 then
-              return
-              end
-              local target
-              if ws_id == 10 or ws_id == 11 then
-              target = is_monitor_active(default_monitor) and default_monitor or secondary_monitor
-                elseif ws_id == 2 or ws_id == 12 then
-                  target = secondary_monitor
-                else
-                  target = is_monitor_active(default_monitor) and default_monitor or secondary_monitor
-                end
-                hl.dispatch(hl.dsp.workspace.move({ workspace = tostring(ws_id), monitor = target, follow = false }))
-              end
-
-              local function get_ws_monitor(ws)
-                if not ws then
-                  return nil
-                end
-                    local m = ws.monitor
-                    if type(m) == "table" then
-                      return m.name
-                    end
-                      return m
-                    end
 
                     -- -----------------------------------------------------------------------
                     -- Environment
@@ -263,28 +215,20 @@
                           -- -----------------------------------------------------------------------
 
                           ${lib.optionalString isMultiMonitor /* lua */ ''
-                            hl.workspace_rule({ workspace = "1", monitor = default_monitor, default = true })
-                            hl.workspace_rule({ workspace = "2", monitor = secondary_monitor, default = true })
-                            hl.workspace_rule({ workspace = "3", monitor = default_monitor})
-                            hl.workspace_rule({ workspace = "4", monitor = default_monitor })
-                            hl.workspace_rule({ workspace = "5", monitor = default_monitor })
-                            hl.workspace_rule({ workspace = "6", monitor = default_monitor, layout = "floating" })
-                            hl.workspace_rule({ workspace = "7", monitor = default_monitor })
-                            hl.workspace_rule({ workspace = "8", monitor = default_monitor })
-                            hl.workspace_rule({ workspace = "9", monitor = default_monitor })
-                            hl.workspace_rule({ workspace = "10", monitor = default_monitor })
+                            hl.workspace_rule({ workspace = "1", monitor = default_monitor, default = true, persistent = true })
+                            hl.workspace_rule({ workspace = "2", monitor = default_monitor, persistent = true })
+                            hl.workspace_rule({ workspace = "3", monitor = secondary_monitor, default = true, persistent = true })
+                            hl.workspace_rule({ workspace = "4", monitor = default_monitor, layout = "master", layout_opts = { orientation = "top" }, persistent = true })
                             hl.workspace_rule({
-                              workspace = "11",
+                              workspace = "5",
                               monitor = default_monitor,
                               no_rounding = true,
                               decorate = false,
                               no_border = true,
                               no_shadow = true,
+                              persistent = true,
                             })
-                            hl.workspace_rule({ workspace = "12", monitor = secondary_monitor })
-                            hl.workspace_rule({ workspace = "13", monitor = ${
-                              if portraitMonitor != "" then "portrait_monitor" else "default_monitor"
-                            }, default = true, layout = "master", layout_opts = { orientation = "top" } })
+                            hl.workspace_rule({ workspace = "6", monitor = default_monitor, persistent = true })
                           ''}
 
                           -- -----------------------------------------------------------------------
@@ -361,10 +305,6 @@
                               hl.bind(mod .. " + 4", hl.dsp.focus({ workspace = "4" }))
                               hl.bind(mod .. " + 5", hl.dsp.focus({ workspace = "5" }))
                               hl.bind(mod .. " + 6", hl.dsp.focus({ workspace = "6" }))
-                              hl.bind(mod .. " + 7", hl.dsp.focus({ workspace = "7" }))
-                              hl.bind(mod .. " + 8", hl.dsp.focus({ workspace = "8" }))
-                              hl.bind(mod .. " + 9", hl.dsp.focus({ workspace = "9" }))
-                              hl.bind(mod .. " + 0", hl.dsp.focus({ workspace = "10" }))
                               hl.bind(mod .. " + d", function()
                                 local wins = hl.get_windows()
                                 if wins then
@@ -375,11 +315,9 @@
                                     end
                                   end
                                 end
-                                hl.dispatch(hl.dsp.focus({ workspace = "13" }))
+                                hl.dispatch(hl.dsp.focus({ workspace = "4" }))
                               end)
-                              hl.bind(mod .. " + s", hl.dsp.focus({ workspace = "10" }))
-                              hl.bind(mod .. " + g", hl.dsp.focus({ workspace = "11" }))
-                              hl.bind(mod .. " + t", hl.dsp.focus({ workspace = "12" }))
+                              hl.bind(mod .. " + s", hl.dsp.focus({ workspace = "5" }))
 
                               hl.bind(mod .. " + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
                               hl.bind(mod .. " + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
@@ -387,14 +325,8 @@
                               hl.bind(mod .. " + SHIFT + 4", hl.dsp.window.move({ workspace = 4 }))
                               hl.bind(mod .. " + SHIFT + 5", hl.dsp.window.move({ workspace = 5 }))
                               hl.bind(mod .. " + SHIFT + 6", hl.dsp.window.move({ workspace = 6 }))
-                              hl.bind(mod .. " + SHIFT + 7", hl.dsp.window.move({ workspace = 7 }))
-                              hl.bind(mod .. " + SHIFT + 8", hl.dsp.window.move({ workspace = 8 }))
-                              hl.bind(mod .. " + SHIFT + 9", hl.dsp.window.move({ workspace = 9 }))
-                              hl.bind(mod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
-                              hl.bind(mod .. " + SHIFT + d", hl.dsp.window.move({ workspace = 13 }))
-                              hl.bind(mod .. " + SHIFT + s", hl.dsp.window.move({ workspace = 10 }))
-                              hl.bind(mod .. " + SHIFT + g", hl.dsp.window.move({ workspace = 11 }))
-                              hl.bind(mod .. " + SHIFT + t", hl.dsp.window.move({ workspace = 12 }))
+                              hl.bind(mod .. " + SHIFT + d", hl.dsp.window.move({ workspace = 4 }))
+                              hl.bind(mod .. " + SHIFT + s", hl.dsp.window.move({ workspace = 5 }))
                               hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
                               hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
@@ -456,17 +388,19 @@
                                 no_blur = true,
                                 suppress_event = "activatefocus",
                               })
-                              hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "13 silent" })
-                              hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "2 silent" })
+                              hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "4 silent" })
+                              hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "3 silent" })
 
                               hl.window_rule({ match = { content = "game", fullscreen = true }, confine_pointer = true })
-                              hl.window_rule({ name = "steampopup", match = { title = "Steamwebhelper" }, workspace = "10 silent", suppress_event = "activatefocus" })
+                              hl.window_rule({ name = "steampopup", match = { title = "Steamwebhelper" }, workspace = "5 silent", suppress_event = "activatefocus" })
                               hl.window_rule({ name = "steamnotification", match = { class = "steam", title = "^notificationtoasts" }, pin=true, suppress_event = "activatefocus", float=true, opacity = "1.0 override" })
-                              hl.window_rule({ name = "steamsignin", match = { initial_title = "Sign in to Steam", initial_class = "steam" }, float = true, center = true, max_size = floating_max_size, suppress_event = "activatefocus", workspace = "10 silent" })
-                              hl.window_rule({ name = "steam", match = { class = "steam|Steam" }, workspace = "10 silent", suppress_event = "activatefocus" })
-                              hl.window_rule({ name = "steamgames", match = { class = "^steam_app_.*$" }, workspace = "11", fullscreen = true, content="game"})
-                              hl.window_rule({ name = "gamescopegames", match = { class = "gamescope" }, workspace = "11" })
-                              hl.window_rule({ name = "hytale", match = { title = "Hytale", class = "HytaleClient" }, fullscreen = true, workspace = "11" , content="game"})
+                              hl.window_rule({ name = "steamsignin", match = { initial_title = "Sign in to Steam", initial_class = "steam" }, float = true, center = true, max_size = floating_max_size, suppress_event = "activatefocus", workspace = "5 silent" })
+                              hl.window_rule({ name = "steam", match = { class = "steam|Steam" }, workspace = "5 silent", suppress_event = "activatefocus" })
+                              hl.window_rule({ name = "steamgames", match = { class = "^steam_app_.*$" }, workspace = "5", fullscreen = true, content="game"})
+                              hl.window_rule({ name = "gamescopegames", match = { class = "gamescope" }, workspace = "5" })
+                              hl.window_rule({ name = "hytale", match = { title = "Hytale", class = "HytaleClient" }, fullscreen = true, workspace = "5" , content="game"})
+
+                              hl.window_rule({ name = "hightide", match = { class = "io.github.nokse22.high-tide" }, workspace = "6 silent" })
 
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
                               hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
@@ -610,56 +544,21 @@
                               -- Event Hooks
                               -- -----------------------------------------------------------------------
 
-                              hl.on("window.open", function(w)
-                                local ws = w.workspace
-                                if ws and get_ws_monitor(ws) == portrait_monitor and ws.id ~= 13 then
-                                  move_ws_from_hdmi(ws.id)
-                                end
-                              end)
-
-                              hl.on("window.move_to_workspace", function(w, ws)
-                                if ws and get_ws_monitor(ws) == portrait_monitor and ws.id ~= 13 then
-                                  move_ws_from_hdmi(ws.id)
-                                end
-                              end)
-
-                              hl.on("workspace.active", function(ws)
-                                if not ws then return end
-
-                                local mon = get_ws_monitor(ws)
-                                if mon == portrait_monitor and ws.id ~= 13 then
-                                  move_ws_from_hdmi(ws.id)
-                                end
-                              end)
-
                               hl.on("monitor.added", function()
-                                local workspaces = hl.get_workspaces()
-                                if not workspaces then
-                                  return
-                                end
-                                for _, ws in ipairs(workspaces) do
-                                  local mon = get_ws_monitor(ws)
-                                  if mon == portrait_monitor and ws.id ~= 13 then
-                                    move_ws_from_hdmi(ws.id)
-                                  end
-                                end
                                 -- Delayed full restore to catch workspaces Hyprland shuffles
                                 -- onto wrong monitors after all monitors settle (session-lock
                                 -- restore, post-resume reallocation, etc.).
-                                hl.exec_cmd("(sleep 2 && ~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\" \"${portraitMonitor}\") &")
+                                hl.exec_cmd("(sleep 2 && ~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\") &")
                               end)
 
                               hl.on("hyprland.start", function()
                                 hl.exec_cmd("noctalia")
                                 hl.exec_cmd("openrgb --startminimized")
-                                hl.exec_cmd("~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\" \"${portraitMonitor}\"")
+                                hl.exec_cmd("~/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\"")
                                 hl.exec_cmd("systemctl --user restart xdg-desktop-portal.service xdg-desktop-portal-hyprland.service")
                                 hl.exec_cmd("~/.config/hypr/scripts/save-workspace.sh")
                                 hl.exec_cmd("xrandr --output ${defaultMonitor} --primary")
-                                hl.exec_cmd("steam", { workspace = "10 silent" })
-                                ${lib.optionalString (portraitMonitor != "") /* lua */ ''
-                                  hl.exec_cmd("~/.config/hypr/scripts/wait-for-vesktop-and-move.sh")
-                                ''}
+                                hl.exec_cmd("steam", { workspace = "5 silent" })
                               end)
             '';
           };
@@ -715,7 +614,7 @@
             };
             Service = {
               Type = "oneshot";
-              ExecStart = "%h/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\" \"${portraitMonitor}\"";
+              ExecStart = "%h/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\"";
               RemainAfterExit = true;
             };
             Install = {

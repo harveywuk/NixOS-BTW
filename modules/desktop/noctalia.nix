@@ -25,7 +25,6 @@
           monitors = host.monitors or { };
           mainName = monitors.main.name or null;
           secondaryName = monitors.secondary.name or null;
-          portraitName = monitors.portrait.name or null;
           builtinName = monitors.builtin.name or null;
           primaryName =
             if mainName != null then
@@ -94,13 +93,7 @@
               }
               // {
                 monitor =
-                  lib.optionalAttrs (portraitName != null) {
-                    ${portraitName} = {
-                      enabled = false;
-                      reserve_space = false;
-                    };
-                  }
-                  // lib.optionalAttrs (mainName != null) {
+                  lib.optionalAttrs (mainName != null) {
                     ${mainName} = {
                       background_opacity = 0.9;
                       capsule = false;
@@ -206,8 +199,7 @@
                 enabled = true;
                 schema_version = 1;
                 widget_order =
-                  lib.optionals (portraitName != null) [ "lockscreen-login-box@${portraitName}" ]
-                  ++ lib.optionals (secondaryName != null) [ "lockscreen-login-box@${secondaryName}" ]
+                  lib.optionals (secondaryName != null) [ "lockscreen-login-box@${secondaryName}" ]
                   ++ lib.optionals (mainName != null) [ "lockscreen-login-box@${mainName}" ]
                   ++ lib.optionals (builtinName != null) [ "lockscreen-login-box@${builtinName}" ]
                   ++ [
@@ -229,19 +221,9 @@
                     "lockscreen-widget-0000000000000013"
                     "lockscreen-widget-0000000000000014"
                     "lockscreen-widget-0000000000000018"
-                    "lockscreen-widget-0000000000000019"
-                    "lockscreen-widget-000000000000001a"
-                    "lockscreen-widget-000000000000001b"
-                    "lockscreen-widget-000000000000001c"
-                    "lockscreen-widget-000000000000001d"
-                    "lockscreen-widget-000000000000001e"
-                    "lockscreen-widget-000000000000001f"
-                    "lockscreen-widget-0000000000000020"
-                    "lockscreen-widget-0000000000000021"
                     "lockscreen-widget-0000000000000025"
                     "lockscreen-widget-0000000000000026"
                     "lockscreen-widget-0000000000000027"
-                    "lockscreen-widget-0000000000000028"
                   ];
                 grid = {
                   cell_size = 8;
@@ -442,171 +424,6 @@
                       cx = 1736.0;
                       cy = 432.0;
                       output = secondaryName;
-                      rotation = 0.0;
-                      type = "sticker";
-                      settings = {
-                        background = false;
-                        background_opacity = 0.78000000000000003;
-                        background_padding = 0;
-                        background_radius = 32;
-                        image_path = "${homeDir}/nix/assets/mr-pickles-logo.webp";
-                        opacity = 1.0;
-                      };
-                    };
-                  }
-                  // lib.optionalAttrs (portraitName != null) {
-                    "lockscreen-login-box@${portraitName}" = {
-                      box_height = 229.0;
-                      box_width = 720.0;
-                      cx = 728.0;
-                      cy = 1459.0;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "login_box";
-                      settings = {
-                        background_opacity = 0.0;
-                        center_password_text = false;
-                        input_radius = 10.0;
-                        layout = "regular";
-                        show_caps_lock = true;
-                        show_keyboard_layout = true;
-                        show_login_button = true;
-                        show_media = true;
-                        show_session_buttons = true;
-                        show_weather = true;
-                      };
-                    };
-                    "lockscreen-widget-0000000000000019" = {
-                      box_height = 224.0;
-                      box_width = 640.0;
-                      cx = 720.0;
-                      cy = 1176.0;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "clock";
-                      settings = {
-                        background = false;
-                        background_color = "surface";
-                        background_opacity = 0.42999999999999999;
-                        background_padding = 10;
-                        background_radius = 12;
-                        center_text = false;
-                        circle = true;
-                        clock_style = "digital";
-                        color = "primary";
-                        font_family = "";
-                        format = "{:%H:%M}";
-                        shadow = true;
-                      };
-                    };
-                    "lockscreen-widget-000000000000001a" = {
-                      box_height = 144.0;
-                      box_width = 448.0;
-                      cx = 736.0;
-                      cy = 1928.0;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "media_player";
-                      settings = {
-                        background_radius = 18;
-                      };
-                    };
-                    "lockscreen-widget-000000000000001b" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1329.5;
-                      cy = 222.5;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "sysmon";
-                      settings = {
-                        stat = "cpu_usage";
-                        stat2 = "cpu_temp";
-                      };
-                    };
-                    "lockscreen-widget-000000000000001c" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1334.0;
-                      cy = 422.5;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "sysmon";
-                      settings = {
-                        stat = "ram_pct";
-                        stat2 = "";
-                      };
-                    };
-                    "lockscreen-widget-000000000000001d" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1334.0;
-                      cy = 657.5;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "sysmon";
-                      settings = {
-                        stat = "net_rx";
-                        stat2 = "net_tx";
-                      };
-                    };
-                    "lockscreen-widget-000000000000001e" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 112.0;
-                      cy = 64.0;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "weather";
-                      settings = {
-                        background = true;
-                      };
-                    };
-                    "lockscreen-widget-000000000000001f" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1329.5;
-                      cy = 146.5;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "label";
-                      settings = {
-                        background = false;
-                        title = "CPU";
-                      };
-                    };
-                    "lockscreen-widget-0000000000000020" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1334.0;
-                      cy = 349.5;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "label";
-                      settings = {
-                        background = false;
-                        title = "RAM";
-                      };
-                    };
-                    "lockscreen-widget-0000000000000021" = {
-                      box_height = 0.0;
-                      box_width = 0.0;
-                      cx = 1334.0;
-                      cy = 584.0;
-                      output = portraitName;
-                      rotation = 0.0;
-                      type = "label";
-                      settings = {
-                        background = false;
-                        title = "Net";
-                      };
-                    };
-                    "lockscreen-widget-0000000000000028" = {
-                      box_height = 256.0;
-                      box_width = 288.0;
-                      cx = 736.0;
-                      cy = 952.0;
-                      output = portraitName;
                       rotation = 0.0;
                       type = "sticker";
                       settings = {
@@ -960,13 +777,6 @@
                       directory = "${homeDir}/pics/ultrawide";
                       directory_dark = "${homeDir}/pics/ultrawide";
                       directory_light = "${homeDir}/pics/ultrawide";
-                    };
-                  }
-                  // lib.optionalAttrs (portraitName != null) {
-                    ${portraitName} = {
-                      directory = "${homeDir}/pics/vertical";
-                      directory_dark = "${homeDir}/pics/vertical";
-                      directory_light = "${homeDir}/pics/vertical";
                     };
                   }
                   // lib.optionalAttrs (builtinName != null) {

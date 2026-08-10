@@ -4,7 +4,6 @@ set -euo pipefail
 
 PRIMARY_MON="${1:-DP-2}"
 SECONDARY_MON="${2:-DP-3}"
-PORTRAIT_MON="${3:-HDMI-A-1}"
 
 LOCK_FILE="/tmp/hypr-restore-monitor-layout.lock"
 
@@ -82,32 +81,18 @@ if [[ "$layout" == work* ]]; then
   dispatch_move_workspace 4  "$ACTIVE_MON"
   dispatch_move_workspace 5  "$ACTIVE_MON"
   dispatch_move_workspace 6  "$ACTIVE_MON"
-  dispatch_move_workspace 7  "$ACTIVE_MON"
-  dispatch_move_workspace 8  "$ACTIVE_MON"
-  dispatch_move_workspace 9  "$ACTIVE_MON"
-  dispatch_move_workspace 10 "$ACTIVE_MON"
-  dispatch_move_workspace 11 "$ACTIVE_MON"
-  dispatch_move_workspace 12 "$ACTIVE_MON"
-  dispatch_move_workspace 13  "$PORTRAIT_MON"
 else
   dispatch_move_workspace 1  "$PRIMARY_MON"
-  dispatch_move_workspace 2  "$SECONDARY_MON"
-  dispatch_move_workspace 3  "$PRIMARY_MON"
+  dispatch_move_workspace 2  "$PRIMARY_MON"
+  dispatch_move_workspace 3  "$SECONDARY_MON"
   dispatch_move_workspace 4  "$PRIMARY_MON"
   dispatch_move_workspace 5  "$PRIMARY_MON"
   dispatch_move_workspace 6  "$PRIMARY_MON"
-  dispatch_move_workspace 7  "$PRIMARY_MON"
-  dispatch_move_workspace 8  "$PRIMARY_MON"
-  dispatch_move_workspace 9  "$PRIMARY_MON"
-  dispatch_move_workspace 10 "$PRIMARY_MON"
-  dispatch_move_workspace 11 "$PRIMARY_MON"
-  dispatch_move_workspace 12 "$SECONDARY_MON"
-  dispatch_move_workspace 13  "$PORTRAIT_MON"
 fi
 
 "$HOME/.config/hypr/scripts/restore-xrandr-primary.sh" "$PRIMARY_MON" "$SECONDARY_MON"
 
-# Cursor default must follow the active primary monitor, never portrait.
+# Cursor default must follow the active primary monitor.
 hyprctl keyword cursor:default_monitor "$PRIMARY_MON" >/dev/null 2>&1 || true
 
 # Focus the primary monitor so workspace 1 lands in the right place
