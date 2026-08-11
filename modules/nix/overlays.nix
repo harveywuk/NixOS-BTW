@@ -42,6 +42,25 @@
               };
             };
           })
+          # nixpkgs builds FreeRDP with WITH_VAAPI off, following upstream,
+          # which marks it "[experimental]" in cmake/ConfigOptions.cmake.
+          # Without it every H.264 frame in a WinBoat session is decoded on
+          # the CPU by OpenH264/ffmpeg - which is what makes Teams video
+          # calls fall over. The flag only gates an ffmpeg hwaccel path in
+          # libfreerdp/codec/h264_ffmpeg.c, so no extra buildInputs are
+          # needed; ffmpeg already links libva.
+          #
+          # Decode lands on /dev/dri/renderD128 (the 3090) via the already
+          # configured LIBVA_DRIVER_NAME=nvidia + NVD_BACKEND=direct. Set
+          # FREERDP_VAAPI_DEVICE=/dev/dri/renderD129 to move it to the
+          # Raphael iGPU instead; both report H264 VLD in vainfo.
+          (final: prev: {
+            freerdp = prev.freerdp.overrideAttrs (old: {
+              cmakeFlags = (prev.lib.remove "-DWITH_VAAPI:BOOL=FALSE" old.cmakeFlags) ++ [
+                (prev.lib.cmakeBool "WITH_VAAPI" true)
+              ];
+            });
+          })
           # pulsar-mouse-linux now packages itself (flake.nix added
           # 2026-08-08) - this just pulls that in rather than duplicating
           # the derivation here.
