@@ -100,7 +100,15 @@
           # NVIDIA RTX 3090
           nvidia = {
             modesetting.enable = true;
-            powerManagement.enable = false;
+            # Preserve VRAM across suspend (NVreg_PreserveVideoMemoryAllocations=1
+            # plus the nvidia-suspend/resume/hibernate units). Was false, which
+            # meant the GPU came back from every suspend with invalid state:
+            # NVRM Xid 13 (Graphics Exception) within a second of "PM: suspend
+            # exit", then Hyprland aborting ~10s later on
+            # glGetGraphicsResetStatus == GL_GUILTY_CONTEXT_RESET, which it
+            # refuses to survive. Crashed on 8 consecutive resumes before this.
+            # Costs a slower suspend/resume - 24GB of VRAM gets staged out.
+            powerManagement.enable = true;
             open = true; # Ampere+ supports the open kernel module
             package = pkgs.nvidia_cachyos;
           };
