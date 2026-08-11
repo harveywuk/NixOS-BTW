@@ -174,11 +174,6 @@
               end
               end
 
-              ---@diagnostic disable-next-line: lowercase-global
-              function move_workspace_to_monitor(workspace, monitor)
-              hl.dispatch(hl.dsp.workspace.move({ workspace = tostring(workspace), monitor = monitor }))
-              end
-
                     -- -----------------------------------------------------------------------
                     -- Environment
                     -- -----------------------------------------------------------------------
@@ -257,10 +252,18 @@
                           -- -----------------------------------------------------------------------
 
                           hl.bind(mod .. " + q", hl.dsp.window.close())
-                          hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
-                          hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.center())
-                          hl.bind(mod .. " + f", hl.dsp.window.fullscreen({ mode="maximized", action = "toggle" }))
-                          hl.bind(mod .. " + SHIFT + f", hl.dsp.window.fullscreen({ mode="fullscreen", action = "toggle" }))
+                          -- Float and centre in one press. These were two separate
+                          -- hl.bind calls on the same key, so the second silently
+                          -- replaced the first and only the centre ever ran.
+                          -- hl.bind takes HL.Dispatcher|function, so a plain closure
+                          -- chains both. Centring a window that just got tiled again
+                          -- by the toggle is a harmless no-op.
+                          hl.bind(mod .. " + SHIFT + Space", function()
+                            hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
+                            hl.dispatch(hl.dsp.window.center())
+                          end)
+                          hl.bind(mod .. " + f", hl.dsp.window.fullscreen({ mode="fullscreen", action = "toggle" }))
+                          hl.bind(mod .. " + SHIFT + f", hl.dsp.window.fullscreen({ mode="maximized", action = "toggle" }))
                           hl.bind(mod .. " + c", hl.dsp.window.center())
                           hl.bind("ALT + TAB", hl.dsp.focus({ workspace = "previous" }))
 
@@ -269,7 +272,9 @@
                           hl.bind(mod .. " + l", hl.dsp.focus({ direction = "right" }))
                           hl.bind(mod .. " + right", hl.dsp.focus({ direction = "right" }))
                           hl.bind(mod .. " + k", hl.dsp.focus({ direction = "up" }))
+                          hl.bind(mod .. " + up", hl.dsp.focus({ direction = "up" }))
                           hl.bind(mod .. " + j", hl.dsp.focus({ direction = "down" }))
+                          hl.bind(mod .. " + down", hl.dsp.focus({ direction = "down" }))
 
                             hl.bind(mod .. " + SHIFT + h", hl.dsp.window.move({ direction = "left" }))
                             hl.bind(mod .. " + SHIFT + left", hl.dsp.window.move({ direction = "left" }))
@@ -369,8 +374,8 @@
                               -- Window Rules
                               -- -----------------------------------------------------------------------
 
-                              local reminder_size = { "(monitor_w*0.2)", "(monitor_h*0.3)" }
-                              local reminder_move = { "(monitor_w-(monitor_w*0.2)-10)", "(monitor_h-(monitor_h*0.3)-10)" }
+                              local pip_size = { "(monitor_w*0.2)", "(monitor_h*0.3)" }
+                              local pip_move = { "(monitor_w-(monitor_w*0.2)-10)", "(monitor_h-(monitor_h*0.3)-10)" }
                               local floating_max_size = { "(monitor_w*0.8)", "(monitor_h*0.8)" }
                               local floating_default_size = { "(monitor_w*0.6)", "(monitor_h*0.6)" }
 
@@ -391,6 +396,13 @@
                               hl.window_rule({ name = "vesktop", match = { class = "vesktop" }, workspace = "4 silent" })
                               hl.window_rule({ name = "discord-popout", match = { class = "vesktop", initial_title = "Discord Popout" }, workspace = "3 silent" })
 
+                              -- WinBoat's Windows session is an xfreerdp window. Force real
+                              -- fullscreen, not maximize: maximize honours the bar's ~61px
+                              -- reserved strip, so the session comes up short of the top edge
+                              -- with the bar sitting in the gap. Real fullscreen covers the
+                              -- monitor outright and Noctalia fades the bar out on its own.
+                              hl.window_rule({ name = "winboat", match = { class = "xfreerdp" }, fullscreen = true })
+
                               hl.window_rule({ match = { content = "game", fullscreen = true }, confine_pointer = true })
                               hl.window_rule({ name = "steampopup", match = { title = "Steamwebhelper" }, workspace = "5 silent", suppress_event = "activatefocus" })
                               hl.window_rule({ name = "steamnotification", match = { class = "steam", title = "^notificationtoasts" }, pin=true, suppress_event = "activatefocus", float=true, opacity = "1.0 override" })
@@ -403,7 +415,7 @@
                               hl.window_rule({ name = "hightide", match = { class = "io.github.nokse22.high-tide" }, workspace = "6 silent" })
 
                               hl.window_rule({ name = "kittydropdown", match = { class = "kittyquick" }, float = true, pin = true })
-                              hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = reminder_size, move = reminder_move, max_size = floating_max_size, no_initial_focus = true })
+                              hl.window_rule({ name = "pip", match = { class = "zen", title = "Picture-in-Picture" }, suppress_event = "activatefocus", float = true, pin = true, size = pip_size, move = pip_move, max_size = floating_max_size, no_initial_focus = true })
                               hl.window_rule({ name = "browser-opaque", match = { class = "^zen$" }, opacity = "1.0 override" })
                               hl.window_rule({ name = "sgdbooppopup", match = { class = "SGDBoop" }, float = true, max_size = floating_max_size })
 
@@ -581,49 +593,29 @@
           };
 
           # --------------------------------------------------------------------------
-          # Resume hook — restore xrandr primary after suspend
-          # because steam games (xwayland) rely on xrandr primary for resolution sometimes o.O
+          # Resume handling lives in the Lua config, not in systemd.
+          #
+          # There used to be two user services here (restore-xrandr-primary and
+          # restore-monitor-layout-after-resume) declaring
+          # WantedBy = [ "graphical-session.target" "sleep.target" ]. The
+          # sleep.target half never did anything: the *user* systemd manager has
+          # no sleep.target at all (`systemctl --user cat sleep.target` finds no
+          # unit), so the symlink dangled and nothing ever pulled them in on
+          # resume. RemainAfterExit = true blocked it independently - both were
+          # already active from graphical-session.target, so a second start
+          # would have been a no-op regardless. They only ever ran once per
+          # login.
+          #
+          # What actually restores things is hl.on("monitor.added") above, which
+          # runs restore-monitor-layout.sh - and that script calls
+          # restore-xrandr-primary.sh itself at its line 93. hyprland.start runs
+          # the same script, so login was covered twice over.
+          #
+          # If a resume ever needs covering where the monitors do NOT drop and
+          # re-add (so monitor.added never fires), that needs a system-level
+          # unit on post-resume.target that pokes the user session - a user unit
+          # cannot do it.
           # --------------------------------------------------------------------------
-
-          systemd.user.services."restore-xrandr-primary" = {
-            Unit = {
-              Description = "Restore xrandr primary monitor after resume";
-              After = [ "graphical-session.target" ];
-            };
-            Service = {
-              Type = "oneshot";
-              ExecStart = "%h/.config/hypr/scripts/restore-xrandr-primary.sh \"${defaultMonitor}\" \"${secondaryMonitor}\"";
-              RemainAfterExit = true;
-            };
-            Install = {
-              WantedBy = [
-                "graphical-session.target"
-                "sleep.target"
-              ];
-            };
-          };
-
-          # --------------------------------------------------------------------------
-          # Resume hook — restore workspace-to-monitor bindings after suspend
-          # --------------------------------------------------------------------------
-
-          systemd.user.services."restore-monitor-layout-after-resume" = {
-            Unit = {
-              Description = "Restore workspace-to-monitor bindings after resume";
-              After = [ "graphical-session.target" ];
-            };
-            Service = {
-              Type = "oneshot";
-              ExecStart = "%h/.config/hypr/scripts/restore-monitor-layout.sh \"${defaultMonitor}\" \"${secondaryMonitor}\"";
-              RemainAfterExit = true;
-            };
-            Install = {
-              WantedBy = [
-                "graphical-session.target"
-                "sleep.target"
-              ];
-            };
-          };
 
           # --------------------------------------------------------------------------
           # Linked Hypr Assets
