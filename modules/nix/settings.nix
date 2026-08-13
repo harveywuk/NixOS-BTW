@@ -20,7 +20,7 @@
         gc = {
           automatic = lib.mkDefault true;
           dates = lib.mkDefault "daily";
-          options = lib.mkDefault "--delete-older-than 5d";
+          options = lib.mkDefault "--delete-older-than 3d";
         };
         optimise = {
           automatic = true;
@@ -94,7 +94,11 @@
           connect-timeout = 10;
           stalled-download-timeout = 100;
           download-attempts = 5;
-          keep-outputs = true;
+          # Was true, which pinned the full build closure (ghc, rustc, clang,
+          # gcc-arm-embedded, kernel -dev, unpacked sources) of every live
+          # derivation and cost ~30 GiB. nix-direnv makes its own GC roots, so
+          # dev shells survive without this.
+          keep-outputs = false;
         };
       };
 
