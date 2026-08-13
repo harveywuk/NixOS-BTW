@@ -1,35 +1,29 @@
 { den, inputs, ... }:
 {
   den.aspects.kernel.nixos =
-    { pkgs, config, ... }:
+    { pkgs, config, chaoticPkgs, ... }:
     {
       imports = [ inputs.chaotic.nixosModules.default ];
 
-      # Intel TDX host support is dead weight on AMD and prints a
-      # "not supported by this platform" message on every boot that
-      # loglevel/quiet can't suppress (kernel 7.1+ evaluates it
-      # unconditionally). Chaotic's cachyos kernel bakes its .config from
-      # a prebuilt `configfile` derivation and ignores NixOS's
-      # boot.kernelPatches/structuredExtraConfig entirely (see
-      # linux-cachyos/kernel.nix -> linuxManualConfig -> build.nix, which
-      # just symlinks `configfile` straight to .config), so the only way
-      # to actually flip this bit is to patch that inner configfile
-      # derivation's build phase directly.
-      boot.kernelPackages =
-        let
-          cachyos = pkgs.linuxPackages_cachyos-lto-znver4;
-          tdxDisabledConfigfile = cachyos.kernel.configfile.overrideAttrs (old: {
-            buildPhase = old.buildPhase + ''
-              scripts/config -d INTEL_TDX_HOST
-              make $makeFlags olddefconfig
-            '';
-          });
-        in
-        cachyos.extend (
-          _self: super: {
-            kernel = super.kernel.override { configfile = tdxDisabledConfigfile; };
-          }
-        );
+      # Taken from chaoticPkgs, NOT from pkgs.* (which would route through
+      # chaotic's overlay and rebuild against our nixpkgs). Combined with
+      # chaotic not following nixpkgs in flake-inputs.nix, this is what
+      # makes the kernel a cache hit from nyx-cache.chaotic.cx instead of
+      # a ~1h local LTO build. See modules/nix/chaotic-pkgs.nix.
+      #
+      # This means the kernel is built against chaotic's nixpkgs pin while
+      # the rest of the system uses ours. That is fine for a kernel, but
+      # any out-of-tree module must come from this same package set - see
+      # boot.extraModulePackages below, which uses config.boot.kernelPackages
+      # for exactly that reason.
+      #
+      # NOTE: an INTEL_TDX_HOST override used to live here to silence a
+      # "not supported by this platform" boot message on AMD. It patched
+      # the inner `configfile` derivation, which re-hashed the kernel and
+      # so guaranteed a from-source build. Dropped deliberately: the
+      # message is cosmetic, the rebuild was not. Do not reintroduce it
+      # without accepting that cost.
+      boot.kernelPackages = chaoticPkgs.linuxPackages_cachyos-lto-znver4;
 
       # Exposes DDC/CI monitors as /sys/class/backlight devices, so brightness
       # can be controlled the same way as a laptop panel instead of via

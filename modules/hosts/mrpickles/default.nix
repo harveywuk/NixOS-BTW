@@ -9,6 +9,7 @@
       den.aspects.systemd
       den.aspects.users
       den.aspects.overlays
+      den.aspects.chaotic-pkgs
       den.aspects.nixsettings
 
       # Hardware
@@ -39,6 +40,7 @@
         lib,
         pkgs,
         config,
+        chaoticPkgs,
         ...
       }:
       {
@@ -110,7 +112,12 @@
             # Costs a slower suspend/resume - 24GB of VRAM gets staged out.
             powerManagement.enable = true;
             open = true; # Ampere+ supports the open kernel module
-            package = pkgs.nvidia_cachyos;
+            # From chaoticPkgs, not pkgs.* - same reasoning as
+            # boot.kernelPackages in kernel.nix. Via the overlay this builds
+            # its kernel module against a cachyos kernel rebuilt on our
+            # nixpkgs, which dragged in a whole second uncached ~1h kernel
+            # build alongside the cached one.
+            package = chaoticPkgs.nvidia_cachyos;
           };
         };
 

@@ -5,10 +5,16 @@
   flake-file.inputs = {
     den.url = "github:denful/den/refs/tags/v0.18.0";
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Deliberately NOT following nixpkgs. Chaotic's CI builds its binary
+    # cache (nyx-cache.chaotic.cx) against its own nixpkgs pin, so making
+    # it follow ours re-hashes every chaotic derivation and misses the
+    # cache - which meant rebuilding the CachyOS LTO kernel from source on
+    # every bump (~1h). The cost is a second nixpkgs in the lock.
+    #
+    # Only pays off for things consumed via inputs.chaotic.legacyPackages;
+    # anything taken from pkgs.* still goes through chaotic's overlay and
+    # is therefore still built against our nixpkgs. See kernel.nix.
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     bibata-hypr-src = {
       url = "github:rtgiskard/bibata_cursor";
       flake = false;

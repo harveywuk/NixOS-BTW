@@ -8,10 +8,7 @@
       url = "github:rtgiskard/bibata_cursor";
       flake = false;
     };
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     den.url = "github:denful/den/refs/tags/v0.18.0";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
