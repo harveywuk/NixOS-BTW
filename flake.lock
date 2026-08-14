@@ -991,6 +991,28 @@
         "type": "github"
       }
     },
+    "polaris": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786676226,
+        "narHash": "sha256-hbamvHN6dTbMI0ZjroxT8N18+xRqSOtmzmWtdl9djIg=",
+        "ref": "refs/heads/master",
+        "rev": "bfc1bb986bf3275c07b6d07ac03c5d407d7f6e6f",
+        "revCount": 634,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/papi-ux/polaris"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/papi-ux/polaris"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -1053,6 +1075,7 @@
         "nixpkgs": "nixpkgs_4",
         "noctalia": "noctalia",
         "noctalia-greeter": "noctalia-greeter",
+        "polaris": "polaris",
         "pulsar-mouse-linux": "pulsar-mouse-linux",
         "scopebuddy": "scopebuddy",
         "sops-nix": "sops-nix",

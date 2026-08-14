@@ -84,6 +84,10 @@
           # 2026-08-08) - this just pulls that in rather than duplicating
           # the derivation here.
           inputs.pulsar-mouse-linux.overlays.default
+          # polaris-stream, gamescope-polaris (+ gamescope-hdr alias),
+          # xdg-desktop-portal-gamescope. cudaSupport is forced on inside
+          # the flake's own nixpkgs instance regardless of ours.
+          inputs.polaris.overlays.default
         ];
       };
     };

@@ -51,6 +51,10 @@
       url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    polaris = {
+      url = "git+https://github.com/papi-ux/polaris?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     pulsar-mouse-linux = {
       url = "github:harveywuk/pulsar-mouse-linux/feinmann8k-driver";
       inputs.nixpkgs.follows = "nixpkgs";

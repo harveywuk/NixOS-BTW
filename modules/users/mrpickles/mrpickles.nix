@@ -75,6 +75,7 @@
         den.aspects.steam
         den.aspects.mangohud
         den.aspects.winboat
+        den.aspects.polaris
       ];
 
       nixos =

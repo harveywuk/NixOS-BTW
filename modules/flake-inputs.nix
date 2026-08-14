@@ -54,6 +54,14 @@
       url = "github:harveywuk/pulsar-mouse-linux/feinmann8k-driver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    polaris = {
+      # CMake needs the third-party/* submodules (wayland-protocols,
+      # moonlight-common-c, etc.). The github: fetcher ignores
+      # ?submodules=1 entirely (GitHub's tarball API never includes
+      # submodule content) - only the git+https: type fetcher honors it.
+      url = "git+https://github.com/papi-ux/polaris?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
