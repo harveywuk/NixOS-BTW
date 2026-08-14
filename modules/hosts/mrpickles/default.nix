@@ -28,6 +28,7 @@
 
       # Services
       den.aspects.ananicy
+      den.aspects.bpftune
       # den.aspects.networkdrives
 
       # System packages
