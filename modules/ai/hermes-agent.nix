@@ -160,7 +160,13 @@
           # working web search now, which is a deliberate consequence of the
           # evidence rather than an oversight: web_search appeared in the tool
           # schema 10 times across captured sessions and was invoked 0 times.
-          DISCORD_ALLOWED_USERS = "329956072435744771";
+          # DISCORD_ALLOWED_USERS lives in the hermes-agent-discord-env sops
+          # secret alongside DISCORD_BOT_TOKEN, not here. It is not a
+          # credential - it is the gateway's allowlist - but this repo is
+          # public, and a bare Discord user ID in it identifies the account
+          # to anyone reading the config. environmentFiles concatenates that
+          # secret into $HERMES_HOME/.env, so Hermes sees it exactly as it
+          # did when this line was here.
           # Kept through the obsidian-second-brain removal, and repointed. This
           # is not second-brain's variable: Hermes' own bundled
           # skills/note-taking/obsidian reads it, and when it is unset that

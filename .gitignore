@@ -8,3 +8,15 @@ result-*
 # this repo. Not part of the config; ignored so they stop showing up as
 # untracked noise in `git status`.
 /ng-check/
+
+# Debris that lands in the repo root from working on the agent stack. Ignored
+# rather than tidied by hand because both kinds reappear, and neither is
+# something you want swept up by a `git add -A`:
+#
+#   cookie jars written by `curl -c` while poking hermes-webui - these hold a
+#   live `hermes_session` token, i.e. an actual credential
+#   Hermes session exports (`hermes sessions export`), NDJSON with one object
+#   per message and named <date>_<time>_<hash> - conversation transcripts,
+#   which are neither configuration nor anything to publish
+/cj*.txt
+/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9]_*
