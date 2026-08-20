@@ -36,6 +36,7 @@
         obsidian
         oculante
         onlyoffice-desktopeditors
+        peazip
         pinta
         protonup-qt
         redact

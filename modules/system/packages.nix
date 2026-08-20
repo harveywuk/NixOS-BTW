@@ -40,6 +40,7 @@
         ncdu
         nurl
         nvd
+        p7zip
         pciutils
         playerctl
         profile-sync-daemon
@@ -51,6 +52,7 @@
         tree
         treefmt
         tree-sitter
+        unrar
         unzip
         usbutils
         via

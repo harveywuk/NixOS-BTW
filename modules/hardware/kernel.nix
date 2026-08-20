@@ -1,19 +1,28 @@
 { den, inputs, ... }:
 {
   den.aspects.kernel.nixos =
-    { pkgs, config, chaoticPkgs, ... }:
+    {
+      pkgs,
+      config,
+      cachyosKernelPkgs,
+      ...
+    }:
     {
       imports = [ inputs.chaotic.nixosModules.default ];
 
-      # Taken from chaoticPkgs, NOT from pkgs.* (which would route through
-      # chaotic's overlay and rebuild against our nixpkgs). Combined with
-      # chaotic not following nixpkgs in flake-inputs.nix, this is what
-      # makes the kernel a cache hit from nyx-cache.chaotic.cx instead of
-      # a ~1h local LTO build. See modules/nix/chaotic-pkgs.nix.
+      # From nix-cachyos-kernel (cachyosKernelPkgs), not chaoticPkgs. Taken
+      # from its own flake outputs (already built against its
+      # own nixpkgs pin, cache-compatible with its Attic cache) rather than
+      # routed through pkgs.* - same reasoning as chaotic below, see
+      # modules/nix/cachyos-kernel-pkgs.nix.
       #
-      # This means the kernel is built against chaotic's nixpkgs pin while
-      # the rest of the system uses ours. That is fine for a kernel, but
-      # any out-of-tree module must come from this same package set - see
+      # hardware.nvidia.package in hosts/mrpickles/default.nix is taken from
+      # this same set for exactly that reason - see the vermagic note there.
+      # It must be switched in lockstep with the variant below.
+      #
+      # This means the kernel is built against a nixpkgs pin different from
+      # both ours and chaotic's. That is fine for a kernel, but any
+      # out-of-tree module must come from this same package set - see
       # boot.extraModulePackages below, which uses config.boot.kernelPackages
       # for exactly that reason.
       #
@@ -23,7 +32,17 @@
       # so guaranteed a from-source build. Dropped deliberately: the
       # message is cosmetic, the rebuild was not. Do not reintroduce it
       # without accepting that cost.
-      boot.kernelPackages = chaoticPkgs.linuxPackages_cachyos-lto-znver4;
+
+      # EEVDF, not BORE. Switched away from linuxPackages-cachyos-bore-lto-zen4
+      # on 2026-08-20: BORE was suspected of causing desktop hitches. This
+      # variant sets no `cpusched` at all in the flake's kernel-cachyos/
+      # default.nix (the bore one explicitly sets cpusched = "bore"), so it is
+      # the stock EEVDF scheduler. Same 7.1.8, same `lto = "thin"`, same zen4
+      # march - the scheduler is the only deliberate difference.
+      #
+      # If the hitches persist, the scheduler was not the cause and this should
+      # go back rather than being left as cargo cult.
+      boot.kernelPackages = cachyosKernelPkgs."linuxPackages-cachyos-latest-lto-zen4";
 
       # Exposes DDC/CI monitors as /sys/class/backlight devices, so brightness
       # can be controlled the same way as a laptop panel instead of via
@@ -72,6 +91,19 @@
         "rd.systemd.show_status=false"
         # Allow GPU soft-reset on ring timeout instead of full hang
         "amdgpu.gpu_recovery=1"
+        # Disable Spectre/Meltdown-class speculative-execution mitigations
+        # for CPU performance. Trades protection against side-channel
+        # attacks (an attacker running arbitrary code on this box, e.g. a
+        # malicious browser tab or VM guest, could read memory it shouldn't)
+        # for throughput - acceptable on a single-user gaming desktop, not
+        # something to carry onto a multi-tenant or untrusted-workload box.
+        "mitigations=off"
+        # Only back explicitly-madvised allocations with huge pages instead
+        # of "always" promoting eligible mappings. Avoids khugepaged
+        # compaction work landing mid-frame as a stutter; costs a little
+        # throughput on workloads that would've benefited from unprompted
+        # THP.
+        "transparent_hugepage=madvise"
       ];
     };
 }

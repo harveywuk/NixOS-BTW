@@ -60,6 +60,7 @@
             "https://nix-community.cachix.org"
             "https://hyprland.cachix.org"
             "https://noctalia.cachix.org"
+            "https://nix-amd-ai.cachix.org"
           ];
           trusted-substituters = [
             # Official nix cache
@@ -70,6 +71,8 @@
             "https://hyprland.cachix.org"
             # Noctalia
             "https://noctalia.cachix.org"
+            # lemonade + its inference backends
+            "https://nix-amd-ai.cachix.org"
           ];
           trusted-public-keys = [
             # Official nix cache
@@ -82,6 +85,8 @@
             "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
             # Noctalia
             "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+            # lemonade + its inference backends
+            "nix-amd-ai.cachix.org-1:F4OU4vw/lV2oiG6SBHZ+nqjl4EFJuqI4X9A7pvaBmhQ="
           ];
           trusted-users = [
             "root"

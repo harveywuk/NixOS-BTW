@@ -15,6 +15,14 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hermes-webui = {
+      url = "github:nesquena/hermes-webui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,16 +31,14 @@
       url = "github:VirtCode/hypr-dynamic-cursors";
       inputs.hyprland.follows = "hyprland";
     };
-    hypr-edgehover = {
-      url = "github:gfhdhytghd/hypr-edgehover";
-      flake = false;
-    };
-    hyprcapture = {
-      url = "github:gfhdhytghd/HyprCapture";
-      inputs.hyprland.follows = "hyprland";
-    };
     hyprland.url = "github:hyprwm/Hyprland";
     import-tree.url = "github:vic/import-tree";
+    mnemosyne = {
+      url = "github:mnemosyne-oss/mnemosyne/refs/tags/v3.15.1";
+      flake = false;
+    };
+    nix-amd-ai.url = "github:noamsto/nix-amd-ai";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,6 +67,10 @@
     };
     scopebuddy = {
       url = "github:OpenGamingCollective/ScopeBuddy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    scopebuddy-gui = {
+      url = "github:harveywuk/scopebuddy-gui-gtk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {

@@ -113,6 +113,45 @@
                 kill -9 $pid; and echo "Killed PID $pid"
               end
             '';
+
+            # llama.cpp serving Qwen3.8-27B holds ~20.9 GiB of the 24 GiB card
+            # for its whole lifetime once up - unlike lemonade it never
+            # auto-evicts, and this card also does gaming (Polaris GameStream,
+            # Steam). modules/ai/llama-cpp.nix deliberately gives the unit no
+            # Install.wantedBy for that reason, so start/stop is manual.
+            #
+            # These replaced vllm-start/vllm-stop/vllm-status on 2026-08-19,
+            # when the patched-vLLM Docker stack was retired (~/qwen38-27b-rtx3090
+            # is gone). The wait-for-free-GPU gate is kept: llama.cpp sizes its
+            # KV pool once at startup against whatever VRAM is free at that
+            # instant, so racing a still-exiting game leaves a smaller pool -
+            # or an outright allocation failure - for the server's whole run.
+            llama-start = ''
+              for i in (seq 1 60)
+                set -l used (nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)
+                if test "$used" -lt 2500
+                  break
+                end
+                if test $i -eq 60
+                  echo "llama-start: GPU still busy after 120s (last: $used MiB used) - starting anyway" >&2
+                end
+                sleep 2
+              end
+              systemctl --user start llama-server-qwen38
+            '';
+
+            llama-stop = ''
+              systemctl --user stop llama-server-qwen38
+            '';
+
+            llama-status = ''
+              systemctl --user status llama-server-qwen38 --no-pager
+              if curl -sf http://localhost:18020/health >/dev/null
+                echo "llama.cpp: healthy"
+              else
+                echo "llama.cpp: not responding"
+              end
+            '';
           }
           // lib.optionalAttrs (config.programs.kitty.enable or false) {
             kk = ''

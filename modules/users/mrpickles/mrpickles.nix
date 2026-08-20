@@ -66,6 +66,19 @@
 
         # Communication
         den.aspects.vesktop
+
+        # AI agent
+        den.aspects.hermes-agent
+        # Hermes' memory provider - depends on hermes-agent above for both the
+        # plugin path and the interpreter it runs on.
+        den.aspects.mnemosyne
+        # Hermes' browser backend - adds uv to the agent's PATH and the
+        # hermes-browser launcher it drives over CDP.
+        den.aspects.browser-use
+        # Named agent teammates as Hermes profiles. Depends on hermes-agent
+        # for HERMES_HOME and on mnemosyne for the memory plugin it links
+        # into each bot, so it must come after both.
+        den.aspects.hermes-bots
       ]
       ++ lib.optionals (host.isGaming or false) [
         # Gated on host.isGaming (set per-host in modules/hosts.nix) so a
@@ -76,6 +89,8 @@
         den.aspects.mangohud
         den.aspects.winboat
         den.aspects.polaris
+        den.aspects.gamemode
+        den.aspects.steam-gamescope-session
       ];
 
       nixos =
@@ -84,6 +99,9 @@
           users.users.mrpickles = {
             description = "mrpickles";
             shell = lib.mkForce pkgs.fish;
+            # Keeps the systemd --user manager (and hermes-agent's gateway
+            # service in it) running after logout - see modules/ai/hermes-agent.nix.
+            linger = true;
             extraGroups = [
               "networkmanager"
               "audio"

@@ -140,18 +140,11 @@
 
             plugins = [
               inputs.hypr-dynamic-cursors.packages.${pkgs.stdenv.hostPlatform.system}.hypr-dynamic-cursors
-              inputs.hyprcapture.packages.${pkgs.stdenv.hostPlatform.system}.hyprcapture
-              (pkgs.hyprlandPlugins.mkHyprlandPlugin {
-                pluginName = "hypr-edgehover";
-                version = "unstable-${inputs.hypr-edgehover.shortRev or "dirty"}";
-                src = inputs.hypr-edgehover;
-                hyprland = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-                nativeBuildInputs = [ pkgs.cmake ];
-                meta = {
-                  homepage = "https://github.com/gfhdhytghd/hypr-edgehover";
-                  description = "Forward edge-gap pointer motion to adjacent Hyprland windows";
-                };
-              })
+              # hyprcapture and hypr-edgehover dropped 2026-08-18: both broke
+              # against Hyprland's CWindow refactor (af0d014) and neither is
+              # used often enough to justify pinning Hyprland back for them.
+              # Re-add once upstream catches up - see flake-inputs.nix history
+              # for the pinned rev this was blocked on.
             ];
 
             configType = "lua";
@@ -242,10 +235,6 @@
                           hl.bind(mod .. " + SHIFT + c", hl.dsp.exec_cmd("pgrep -x hyprpicker > /dev/null 2>&1 && killall hyprpicker || hyprpicker -a -f hex -r"))
                           hl.bind(mod .. " + e", hl.dsp.exec_cmd("nautilus"))
                           hl.bind(mod .. " + o", hl.dsp.exec_cmd("obsidian"))
-
-                          if hl.plugin.hyprcapture then
-                            hl.bind(mod .. " + SHIFT + a", hl.plugin.hyprcapture.open)
-                          end
 
                           -- -----------------------------------------------------------------------
                           -- Window Binds

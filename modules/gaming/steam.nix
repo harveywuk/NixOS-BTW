@@ -60,12 +60,15 @@
         {
           home.packages = with pkgs; [
             inputs.scopebuddy.packages.${pkgs.stdenv.hostPlatform.system}.default
-            gamescope
+            inputs.scopebuddy-gui.packages.${pkgs.stdenv.hostPlatform.system}.default
+            # gamescope itself comes from den.aspects.polaris (gamescope-polaris,
+            # an HDR-patched build) - a plain gamescope here collides with it in
+            # home.packages (same wrapped binary path).
             protontricks
             vulkan-tools
             sgdboop
-            # if you want GTK theme style for Steam, requires manual running to apply
-            # adwsteamgtk
+            # GTK theme style for Steam; run `adwsteamgtk` manually to apply
+            adwsteamgtk
           ];
 
           # Steam's STEAM_EXTRA_COMPAT_TOOLS_PATHS (used by programs.steam.extraCompatPackages)

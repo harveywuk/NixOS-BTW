@@ -61,25 +61,6 @@
               ];
             });
           })
-          # ananicy-cpp 1.2.0 builds under clangStdenv, which nixpkgs moved
-          # to clang/libc++ 21. libc++ 21 dropped a pile of transitive
-          # includes, so sources that reached std::int32_t through <cstdlib>
-          # or std::memset through <string> no longer compile:
-          # backtrace.cpp wants <cstdint>, argument.cpp wants <cstring>.
-          #
-          # Force-include both rather than patching each file, since the
-          # first error aborts the translation unit and hides the rest.
-          # CXXFLAGS (not NIX_CFLAGS_COMPILE) keeps this off the C compiles -
-          # the BPF objects are C and would choke on a C++ header.
-          #
-          # Drop this once nixpkgs picks up an upstream fix.
-          (final: prev: {
-            ananicy-cpp = prev.ananicy-cpp.overrideAttrs (old: {
-              env = (old.env or { }) // {
-                CXXFLAGS = "-include cstdint -include cstring";
-              };
-            });
-          })
           # pulsar-mouse-linux now packages itself (flake.nix added
           # 2026-08-08) - this just pulls that in rather than duplicating
           # the derivation here.
@@ -88,6 +69,35 @@
           # xdg-desktop-portal-gamescope. cudaSupport is forced on inside
           # the flake's own nixpkgs instance regardless of ours.
           inputs.polaris.overlays.default
+          # llama.cpp with the CUDA backend, under its own attribute name so
+          # both the llama-cpp and lemonade aspects can reach the exact same
+          # build (lemonade points its llamacpp.cuda_bin at it).
+          #
+          # Built from an explicit `import inputs.nixpkgs` rather than `prev`
+          # on purpose. nix-amd-ai's overlay - added by lemonade.nix via its
+          # nixosModules.default - rebinds `llama-cpp` to a derivation from
+          # *its own* pinned nixpkgs, whose config carries neither allowUnfree
+          # nor our cudaCapabilities. Reading `prev.llama-cpp` would therefore
+          # give a different answer depending on which overlay the module
+          # system happens to order first: either an unfree-CUDA eval failure
+          # or a silent build for every capability. A fresh instance is
+          # order-independent, and the attribute name is ours alone so nothing
+          # downstream can shadow it.
+          (final: prev: {
+            llama-cpp-cuda =
+              (import inputs.nixpkgs {
+                inherit (prev.stdenv.hostPlatform) system;
+                config = {
+                  allowUnfree = true;
+                  # The 3090 is GA102 - compute capability 8.6, and the only
+                  # CUDA device in the box. nixpkgs otherwise builds every
+                  # capability the toolkit supports, multiplying an already
+                  # uncached compile by a dozen architectures we can't run.
+                  cudaCapabilities = [ "8.6" ];
+                };
+              }).llama-cpp.override
+                { cudaSupport = true; };
+          })
         ];
       };
     };

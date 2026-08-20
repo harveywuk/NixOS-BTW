@@ -18,11 +18,19 @@
               via
               vial
             ];
+            # NVMe multi-queue hardware already does its own request
+            # ordering, so a software scheduler (mq-deadline by default) is
+            # redundant CPU overhead. "none" is upstream's own recommendation
+            # for NVMe. Unconditional (not host-gated like the block below) -
+            # applies to any NVMe drive regardless of host.
+            udev.extraRules = ''
+              ACTION=="add|change", SUBSYSTEM=="block", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"
+            ''
             # Blacklist udev rule for this host - was gated on host.hostName == "void",
             # but no host in modules/hosts.nix is ever named that (only "nixos-btw" -
             # "void" is just its cosmetic `greeting` string), so this whole block was
             # always inactive. Fixed 2026-08-09 to match the real host.
-            udev.extraRules = lib.mkIf (host.hostName == "nixos-btw") ''
+            + lib.optionalString (host.hostName == "nixos-btw") ''
               # Block MediaTek Wireless_Device (0e8d:0717) from binding - causes firmware timeout errors
               # DEVTYPE=="usb_device" prevents matching on interfaces which lack the authorized attr
               SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="0e8d", ATTRS{idProduct}=="0717", ATTR{authorized}="0"

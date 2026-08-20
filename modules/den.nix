@@ -33,6 +33,7 @@
           sharedModules = [
             inputs.nix-index-database.homeModules.default
             inputs.noctalia.homeModules.default
+            inputs.hermes-agent.homeManagerModules.default
           ];
         };
       };
